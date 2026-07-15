@@ -260,22 +260,22 @@
   @media (max-width:860px){ .cta-box{grid-template-columns:1fr; padding:42px 26px;} }
   .cta-box h2{color:var(--white); font-size:clamp(1.6rem,3vw,2.2rem); margin-bottom:16px;}
   .cta-box p{color:#B9C7C1; font-size:0.98rem; max-width:440px;}
-  .demo-form{background:#182420; border-radius:16px; padding:26px;}
+  .demo-form{background:var(--white); border-radius:16px; padding:26px; border:1px solid var(--line);}
   .demo-form label{
     display:block; font-family:'IBM Plex Mono'; font-size:0.68rem; text-transform:uppercase;
-    letter-spacing:0.1em; color:#8FB3AB; margin-bottom:8px; margin-top:15px;
+    letter-spacing:0.1em; color:var(--teal); margin-bottom:8px; margin-top:15px;
   }
   .demo-form label:first-child{margin-top:0;}
   .demo-form input, .demo-form select{
-    width:100%; background:#0E1815; border:1px solid #2C3B36; border-radius:8px;
-    padding:12px 14px; color:var(--white); font-size:0.9rem;
+    width:100%; background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:12px 14px; color:var(--ink); font-size:0.9rem;
   }
   .demo-form button{
-    width:100%; margin-top:20px; background:var(--white); color:var(--teal); border:1.5px solid var(--teal);
+    width:100%; margin-top:20px; background:var(--rust); color:var(--white); border:none;
     padding:14px; border-radius:8px; font-weight:600; font-size:0.94rem; cursor:pointer;
     transition:background 0.2s;
   }
-  .demo-form button:hover{background:#EAEEFF;}
+  .demo-form button:hover{background:var(--rust-dark);}
 
   /* ---------- FOOTER ---------- */
   footer{border-top:1px solid var(--line); padding:44px 0;}
