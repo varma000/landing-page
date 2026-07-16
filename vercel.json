@@ -3,6 +3,7 @@
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
     { "source": "/ai-for-beginners", "destination": "/aiforbeginners.html" },
-    { "source": "/ai-for-students", "destination": "/aiforstudents.html" }
+    { "source": "/ai-for-students", "destination": "/aiforstudents.html" },
+    { "source": "/ai-for-marketing", "destination": "/aiformarketing.html" }
   ]
 }

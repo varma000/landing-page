@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI for Marketing Professionals — KonkanTech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1220;
+    --paper:#F5F7FB;
+    --paper-alt:#E9EEF7;
+    --teal:#000090;
+    --teal-dark:#00005C;
+    --rust:#1D4ED8;
+    --rust-dark:#1438A8;
+    --mint:#D6E0FF;
+    --line:#D2DAE8;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper); color:var(--ink); font-family:'Poppins', sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased;}
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;} }
+  h1,h2,h3,h4{font-family:'Poppins', sans-serif; font-weight:700; letter-spacing:-0.01em; line-height:1.12;}
+  .mono{font-family:'IBM Plex Mono', monospace; text-transform:uppercase; letter-spacing:0.12em; font-size:0.72rem; font-weight:500;}
+  a{color:inherit;} img,svg{display:block; max-width:100%;}
+  button, input, select{font-family:'Poppins', sans-serif;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{outline:2px solid var(--rust); outline-offset:3px;}
+
+  /* NAV */
+  header{position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.96); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
+  .navwrap{max-width:1180px; margin:0 auto; padding:16px 32px; display:flex; align-items:center; justify-content:space-between; gap:16px;}
+  .logo{display:flex; align-items:center; gap:10px; flex-shrink:0;}
+  .logo-img{height:40px; width:auto; display:block;}
+  .nav-links{display:flex; gap:28px; font-size:0.9rem; font-weight:500;}
+  .nav-links a{text-decoration:none; opacity:0.75; transition:opacity 0.2s;}
+  .nav-links a:hover{opacity:1;}
+  .btn{background:var(--rust); color:var(--white); border:none; padding:12px 22px; border-radius:100px; font-weight:600; font-size:0.88rem; text-decoration:none; display:inline-block; cursor:pointer; transition:background 0.2s, transform 0.15s;}
+  .btn:hover{background:var(--rust-dark); transform:translateY(-1px);}
+  .btn-ghost{background:transparent; color:var(--ink); border:1.5px solid var(--line); padding:12px 22px; border-radius:100px; font-weight:600; font-size:0.88rem; text-decoration:none; display:inline-block; transition:border-color 0.2s;}
+  .btn-ghost:hover{border-color:var(--teal);}
+  .btn-light{background:var(--white); color:var(--teal); border:1.5px solid var(--white); padding:12px 22px; border-radius:100px; font-weight:600; font-size:0.88rem; text-decoration:none; display:inline-block;}
+  @media (max-width:860px){ .nav-links{display:none;} }
+
+  /* HERO */
+  .hero{padding:70px 0 40px; background:linear-gradient(160deg, var(--paper) 0%, var(--mint) 100%);}
+  .hero-grid{display:grid; grid-template-columns:1fr 1fr; gap:54px; align-items:center;}
+  .hero .eyebrow{color:var(--teal); margin-bottom:16px; display:inline-flex; align-items:center; gap:10px;}
+  .hero .eyebrow::before{content:''; width:22px; height:1px; background:var(--teal);}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.4rem); margin-bottom:16px;}
+  .hero h1 em{font-style:normal; color:var(--teal);}
+  .hero p.lead{font-size:1.1rem; color:#31423C; max-width:520px; margin-bottom:26px;}
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+  .hero-visual{border-radius:22px; overflow:hidden; box-shadow:0 20px 50px rgba(11,18,32,0.18);}
+  .hero-visual img{width:100%; height:420px; object-fit:cover; display:block;}
+  @media (max-width:860px){ .hero-grid{grid-template-columns:1fr;} .hero-visual img{height:300px;} }
+
+  /* OUTCOME STRIP */
+  .strip{background:var(--teal); color:var(--white); border-radius:18px; padding:30px 24px; display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:10px;}
+  .strip .stat{text-align:center; border-right:1px solid rgba(255,255,255,0.16);}
+  .strip .stat:last-child{border-right:none;}
+  .strip .big{font-size:1.9rem; font-weight:800; color:var(--mint);}
+  .strip .lbl{font-size:0.82rem; color:#C9D7FF; margin-top:4px;}
+  @media (max-width:680px){ .strip{grid-template-columns:1fr 1fr;} .strip .stat:nth-child(2){border-right:none;} }
+
+  /* SECTION SHELL */
+  section.block{padding:78px 0;}
+  .section-head{max-width:700px; margin:0 auto 46px; text-align:center;}
+  .section-head .mono{color:var(--teal); margin-bottom:14px; display:block;}
+  .section-head h2{font-size:clamp(1.8rem,3.4vw,2.4rem);}
+  .section-head p{color:#4A5A54; margin-top:14px; font-size:1rem;}
+
+  /* BENTO GRID */
+  .bento{display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:minmax(150px,auto); gap:18px; max-width:980px; margin:0 auto;}
+  .bento .b{border:1px solid var(--line); border-radius:18px; padding:24px; background:var(--white); display:flex; flex-direction:column; justify-content:space-between;}
+  .bento .b .ic{width:46px; height:46px; border-radius:13px; background:var(--mint); color:var(--teal); display:flex; align-items:center; justify-content:center; font-size:1.3rem; margin-bottom:14px;}
+  .bento .b h3{font-size:1.05rem; color:var(--teal);}
+  .bento .b p{font-size:0.86rem; color:#31423C; margin-top:6px;}
+  .bento .tall{grid-row:span 2;}
+  .bento .wide{grid-column:span 2;}
+  @media (max-width:760px){ .bento{grid-template-columns:1fr 1fr;} .bento .wide{grid-column:span 2;} }
+
+  /* TOOL STACK */
+  .stack{background:var(--paper-alt);}
+  .stack-row{display:flex; flex-wrap:wrap; justify-content:center; gap:14px; max-width:920px; margin:0 auto 30px;}
+  .tool-chip{display:flex; align-items:center; gap:10px; background:var(--white); border:1px solid var(--line); border-radius:100px; padding:11px 20px; font-weight:600; font-size:0.88rem;}
+  .tool-chip .ic{width:24px; height:24px; border-radius:50%; background:var(--mint); color:var(--teal); display:flex; align-items:center; justify-content:center; font-size:0.66rem; font-weight:700;}
+  .stack-visuals{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; max-width:920px; margin:0 auto;}
+  .stack-visuals img{width:100%; height:200px; object-fit:cover; border-radius:14px; border:1px solid var(--line);}
+  @media (max-width:680px){ .stack-visuals{grid-template-columns:1fr;} }
+
+  /* SPRINT BENTO (5 cards) */
+  .sprint{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; max-width:980px; margin:0 auto;}
+  .sprint .sc{border:1px solid var(--line); border-radius:18px; padding:24px; background:var(--white);}
+  .sprint .sc .wn{font-family:'IBM Plex Mono'; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--rust);}
+  .sprint .sc h3{font-size:1.08rem; margin:8px 0; color:var(--ink);}
+  .sprint .sc .tool{font-size:0.8rem; color:var(--teal); font-weight:600; margin:8px 0;}
+  .sprint .sc .ex{font-size:0.84rem; color:#31423C; background:var(--paper-alt); border-left:3px solid var(--rust); border-radius:8px; padding:9px 12px;}
+  .sprint .sc .vimg{width:100%; height:120px; object-fit:cover; border-radius:10px; margin-top:14px;}
+  @media (max-width:760px){ .sprint{grid-template-columns:1fr;} }
+
+  /* PROJECT FEATURE CARDS */
+  .feat{display:grid; grid-template-columns:repeat(2,1fr); gap:22px; max-width:940px; margin:0 auto;}
+  .feat .fc{background:var(--white); border:1px solid var(--line); border-radius:18px; overflow:hidden;}
+  .feat .fc img{width:100%; height:240px; object-fit:cover;}
+  .feat .fc .body{padding:24px 26px;}
+  .feat .fc .tag{font-family:'IBM Plex Mono'; font-size:0.66rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--rust);}
+  .feat .fc h3{font-size:1.2rem; color:var(--teal); margin:6px 0;}
+  .feat .fc p{font-size:0.9rem; color:#31423C;}
+  @media (max-width:720px){ .feat{grid-template-columns:1fr;} }
+
+  /* RESULTS */
+  .results{background:var(--teal); color:var(--white);}
+  .results .section-head .mono{color:var(--mint);}
+  .results .section-head h2{color:var(--white);}
+  .results .section-head p{color:#B9CFC9;}
+  .res-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:820px; margin:0 auto;}
+  .res{text-align:center; padding:26px; border:1px solid rgba(255,255,255,0.18); border-radius:16px;}
+  .res .big{font-size:2.4rem; font-weight:800; color:var(--mint);}
+  .res .lbl{font-size:0.9rem; color:#D6E0FF; margin-top:6px;}
+
+  /* TESTIMONIALS */
+  .testi{background:var(--white);}
+  .testi-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:980px; margin:0 auto;}
+  @media (max-width:860px){ .testi-grid{grid-template-columns:1fr;} }
+  .t-card{background:var(--paper-alt); border:1px solid var(--line); border-radius:16px; padding:24px;}
+  .t-card p{font-size:0.92rem; color:#31423C; font-style:italic;}
+  .t-card .who{margin-top:14px; font-weight:600; font-size:0.88rem; color:var(--teal);}
+
+  /* FAQ */
+  .faq{max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:14px;}
+  .faq-item{background:var(--white); border:1px solid var(--line); border-radius:14px; overflow:hidden;}
+  .faq-q{padding:18px 22px; cursor:pointer; font-weight:600; display:flex; justify-content:space-between; align-items:center; gap:12px;}
+  .faq-q .plus{color:var(--teal); font-size:1.3rem; transition:transform 0.3s;}
+  .faq-item.open .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height 0.35s ease;}
+  .faq-a-inner{padding:0 22px 18px; font-size:0.9rem; color:#31423C;}
+
+  /* ENROLL / LEAD FORM */
+  .enroll{background:var(--teal-dark); color:var(--white);}
+  .enroll .section-head .mono{color:var(--mint);}
+  .enroll .section-head h2{color:var(--white);}
+  .enroll .section-head p{color:#B9CFC9;}
+  .enroll-box{max-width:560px; margin:0 auto; background:var(--white); border:1px solid var(--line); border-radius:18px; padding:30px;}
+  .enroll-box label{display:block; font-family:'IBM Plex Mono'; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--teal); margin:14px 0 8px;}
+  .enroll-box label:first-child{margin-top:0;}
+  .enroll-box input{width:100%; background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:12px 14px; color:var(--ink); font-size:0.9rem;}
+  .enroll-box .btn{width:100%; margin-top:20px; background:var(--rust); color:var(--white); border:none; padding:14px; border-radius:8px; font-weight:600; font-size:0.95rem; cursor:pointer;}
+  .enroll-box .btn:hover{background:var(--rust-dark);}
+  .enroll-box .wa{display:block; text-align:center; margin-top:14px; font-size:0.84rem; color:#4A5A54;}
+  .enroll-box .wa a{color:var(--teal); font-weight:600; text-decoration:none;}
+
+  /* FINAL BANNER */
+  .banner{padding:70px 0; text-align:center;}
+  .banner h2{font-size:clamp(1.7rem,3.2vw,2.4rem); margin-bottom:20px; max-width:760px; margin-left:auto; margin-right:auto;}
+  .banner .contact-line{margin-top:22px; font-size:0.9rem; color:#4A5A54;}
+  .banner .contact-line a{color:var(--teal); font-weight:600; text-decoration:none;}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line); padding:48px 0; background:var(--white);}
+  footer .wrap{display:grid; grid-template-columns:1.4fr 1fr 1fr 1.4fr; gap:28px;}
+  @media (max-width:860px){ footer .wrap{grid-template-columns:1fr 1fr;} }
+  @media (max-width:560px){ footer .wrap{grid-template-columns:1fr;} }
+  footer .col h4{font-size:0.95rem; color:var(--teal); margin-bottom:14px;}
+  footer .foot-links{display:flex; flex-direction:column; gap:9px; font-size:0.88rem; font-weight:500;}
+  footer .foot-links a{text-decoration:none; opacity:0.8;}
+  footer .foot-links a:hover{opacity:1;}
+  footer .footer-contact{font-size:0.86rem; line-height:1.95;}
+  footer .footer-item{display:flex; align-items:center; gap:9px; color:var(--teal);}
+  footer .footer-item a{text-decoration:none; color:var(--teal); font-weight:500;}
+  footer .contact-ico{width:16px; height:16px; flex-shrink:0; stroke:var(--teal); fill:none; stroke-width:1.8;}
+  footer .socials{display:flex; gap:10px; margin-top:14px;}
+  footer .socials a{width:34px; height:34px; border-radius:50%; background:var(--paper-alt); color:var(--teal); display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:0.72rem; font-weight:700;}
+  footer .mono{color:#5A6B64; display:block; margin-top:18px;}
+
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity 0.6s ease, transform 0.6s ease;}
+  .reveal.visible{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="navwrap">
+    <a class="logo" href="#top" aria-label="Konkan Technology Services — home">
+      <img class="logo-img" src="Assets/kts-logo.png" alt="Konkan Technology Services">
+    </a>
+    <nav class="nav-links">
+      <a href="#stack">AI Stack</a>
+      <a href="#sprint">The Sprint</a>
+      <a href="#results">Results</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#enroll" class="btn">Enroll Now</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow mono">AI for Marketing Professionals</div>
+        <h1>10x your marketing output with AI — <em>copy, creative, SEO, and campaigns.</em></h1>
+        <p class="lead">A serious, hands-on upskilling course for marketers who want to ship more, faster — with a real multi-channel campaign in their portfolio.</p>
+        <div class="hero-ctas">
+          <a href="#enroll" class="btn">Enroll Now</a>
+          <a href="#sprint" class="btn-ghost">See Curriculum</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="marketing-img/hero-marketing.jpg" alt="Marketer working with an AI-powered campaign dashboard">
+      </div>
+    </div>
+    <div class="strip reveal">
+      <div class="stat"><div class="big">10x</div><div class="lbl">Content Output</div></div>
+      <div class="stat"><div class="big">10</div><div class="lbl">AI Tools Mastered</div></div>
+      <div class="stat"><div class="big">1</div><div class="lbl">Live Campaign Built</div></div>
+      <div class="stat"><div class="big">4–5</div><div class="lbl">Week Sprint</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="who">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Built For</span>
+      <h2>Who this course is built for</h2>
+      <p>Outcome-driven professionals who need to do more with less.</p>
+    </div>
+    <div class="bento">
+      <div class="b tall reveal"><div><div class="ic">📱</div><h3>Social Media Managers</h3><p>Produce a week of platform-ready content in an afternoon, with AI-written captions and on-brand creatives.</p></div></div>
+      <div class="b reveal"><div><div class="ic">🏢</div><h3>Agency Staff</h3><p>Deliver more client campaigns per quarter without more headcount.</p></div></div>
+      <div class="b reveal"><div><div class="ic">🚀</div><h3>Founders</h3><p>Do your own marketing that looks like a 5-person team built it.</p></div></div>
+      <div class="b wide reveal"><div><div class="ic">📊</div><h3>In-House Marketers</h3><p>Turn briefs into blogs, ads, SEO articles, and calendars — then prove ROI with real dashboards.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block stack" id="stack">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Your AI Marketing Stack</span>
+      <h2>Ten tools. One workflow.</h2>
+      <p>The exact stack top marketing teams use — mastered, hands-on.</p>
+    </div>
+    <div class="stack-row">
+      <div class="tool-chip"><span class="ic">CG</span> ChatGPT</div>
+      <div class="tool-chip"><span class="ic">CL</span> Claude</div>
+      <div class="tool-chip"><span class="ic">JS</span> Jasper</div>
+      <div class="tool-chip"><span class="ic">CM</span> Canva Magic</div>
+      <div class="tool-chip"><span class="ic">MJ</span> Midjourney</div>
+      <div class="tool-chip"><span class="ic">SE</span> Surfer SEO</div>
+      <div class="tool-chip"><span class="ic">PD</span> Predis.ai</div>
+      <div class="tool-chip"><span class="ic">BF</span> Buffer AI</div>
+      <div class="tool-chip"><span class="ic">AC</span> AdCreative.ai</div>
+      <div class="tool-chip"><span class="ic">HS</span> HubSpot AI</div>
+    </div>
+    <div class="stack-visuals">
+      <img class="reveal" src="marketing-img/content-calendar.jpg" alt="Content calendar mockup">
+      <img class="reveal" src="marketing-img/ad-creative.jpg" alt="Ad creative grid mockup">
+      <img class="reveal" src="marketing-img/campaign-dashboard.jpg" alt="Campaign analytics dashboard mockup">
+    </div>
+  </div>
+</section>
+
+<section class="block" id="sprint">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">The Sprint</span>
+      <h2>Your 5-week build</h2>
+      <p>Each week ships a real asset. No theory, only output.</p>
+    </div>
+    <div class="sprint">
+      <div class="sc reveal"><div class="wn">Week 1</div><h3>Prompting + AI Writing</h3><div class="tool">ChatGPT · Claude · Jasper</div><div class="ex">Exercise: Write a blog + 5 ad variants from one brief</div><img class="vimg" src="marketing-img/ad-creative.jpg" alt=""></div>
+      <div class="sc reveal"><div class="wn">Week 2</div><h3>Visual Creative</h3><div class="tool">Canva Magic · Midjourney</div><div class="ex">Exercise: Brand kit + 10 social cards</div><img class="vimg" src="marketing-img/brand-kit.jpg" alt=""></div>
+      <div class="sc reveal"><div class="wn">Week 3</div><h3>SEO + Content Engine</h3><div class="tool">Surfer SEO · Predis.ai · Buffer AI</div><div class="ex">Exercise: 7-day content calendar + optimized article</div><img class="vimg" src="marketing-img/content-calendar.jpg" alt=""></div>
+      <div class="sc reveal"><div class="wn">Week 4</div><h3>Full Campaign Build</h3><div class="tool">Jasper · AdCreative.ai</div><div class="ex">Exercise: Assemble a launch campaign</div><img class="vimg" src="marketing-img/campaign-dashboard.jpg" alt=""></div>
+      <div class="sc reveal"><div class="wn">Week 5 · Optional</div><h3>Capstone Polish &amp; Analytics</h3><div class="tool">HubSpot AI</div><div class="ex">Exercise: Live campaign review</div><img class="vimg" src="marketing-img/social-analytics.jpg" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Showcase</span>
+      <h2>Two portfolio-ready deliverables</h2>
+    </div>
+    <div class="feat">
+      <div class="fc reveal"><img src="marketing-img/brand-kit.jpg" alt="Brand kit mockup"><div class="body"><span class="tag">Mini-Project</span><h3>Brand in a Week</h3><p>A complete social + ad + SEO content set for a fictional brand — ready to show in any interview or pitch.</p></div></div>
+      <div class="fc reveal"><img src="marketing-img/campaign-dashboard.jpg" alt="Multi-channel campaign dashboard"><div class="body"><span class="tag">Final Capstone</span><h3>AI Marketing Launch</h3><p>A full multi-channel campaign — personas, copy, creatives, calendar, and dashboard — for a real or simulated client.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block results" id="results">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Results</span>
+      <h2>Join 500+ professionals already using AI to scale their marketing</h2>
+    </div>
+    <div class="res-grid">
+      <div class="res reveal"><div class="big">500+</div><div class="lbl">Professionals trained</div></div>
+      <div class="res reveal"><div class="big">97%</div><div class="lbl">Success rate</div></div>
+      <div class="res reveal"><div class="big">5+</div><div class="lbl">Years of experience</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block testi">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Testimonials</span>
+      <h2>What marketers say</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="t-card reveal"><p>"We shipped a client's full launch campaign in 4 days instead of 3 weeks. The portfolio piece alone paid for the course."</p><div class="who">— Priya, Social Media Manager @ agency</div></div>
+      <div class="t-card reveal"><p>"As a founder doing my own marketing, this gave me an actual system — not just prompts. My content output literally 10x'd."</p><div class="who">— Rahul, Founder, D2C brand</div></div>
+      <div class="t-card reveal"><p>"The campaign analytics week changed how we report to clients. Now every deck has a real dashboard."</p><div class="who">— Sneha, Agency Account Lead</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="faq">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">FAQ</span>
+      <h2>Questions marketers ask</h2>
+    </div>
+    <div class="faq">
+      <div class="faq-item reveal">
+        <div class="faq-q">Do I need coding skills? <span class="plus">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">No. This is a no-code course. You'll use AI tools through their normal interfaces — if you can write a brief, you can do this.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Will I get a real campaign in my portfolio? <span class="plus">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Yes. By week 5 you'll have a full multi-channel campaign — personas, copy, creatives, calendar, and a live dashboard — ready to show clients or employers.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Is this useful for freelancers and agencies? <span class="plus">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Absolutely. Freelancers use it to take more clients; agencies use it to deliver more campaigns per team without adding headcount.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">How is this different from the Beginners course? <span class="plus">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Beginners is a gentle first step for non-tech learners. This course is outcome-driven and assumes basic marketing awareness — built to ship real campaigns, not to explain what AI is.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block enroll" id="enroll">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Enroll</span>
+      <h2>Ready to 10x your marketing output?</h2>
+      <p>Leave your details and we'll reach out with the next cohort. (Form will connect to WhatsApp / Google Form / CRM later.)</p>
+    </div>
+    <form class="enroll-box reveal" id="mkForm">
+      <label for="mname">Name</label>
+      <input id="mname" type="text" placeholder="Your full name" required>
+      <label for="mrole">Role</label>
+      <input id="mrole" type="text" placeholder="e.g. Social Media Manager" required>
+      <label for="mcompany">Company</label>
+      <input id="mcompany" type="text" placeholder="Company / Agency (optional)" >
+      <label for="mphone">Phone</label>
+      <input id="mphone" type="text" placeholder="Your phone number" required>
+      <label for="memail">Email</label>
+      <input id="memail" type="email" placeholder="Your email" required>
+      <button type="submit" class="btn">Enroll Now</button>
+      <span class="wa">Or message us on <a href="https://wa.me/919325398862" target="_blank">WhatsApp (+91 9325398862)</a></span>
+    </form>
+  </div>
+</section>
+
+<section class="block banner">
+  <div class="wrap">
+    <h2 class="reveal">Ready to 10x your marketing output?</h2>
+    <div class="hero-ctas reveal" style="justify-content:center;">
+      <a href="#enroll" class="btn">Enroll Now</a>
+      <a href="#enroll" class="btn-ghost">Get Free Quote</a>
+    </div>
+    <div class="contact-line reveal">
+     📞 <a href="tel:+919325398862">(+91) 9325398862</a> &nbsp;·&nbsp; ✉️ <a href="mailto:konkantechnology@gmail.com">konkantechnology@gmail.com</a><br>
+      📍 Near Amul Parlour, Dighi Road, Mhasla, Raigad – 402105 &nbsp;·&nbsp; <a href="https://wa.me/919325398862" target="_blank">WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="logo" href="#top" aria-label="Konkan Technology Services — home">
+        <img class="logo-img" src="Assets/kts-logo.png" alt="Konkan Technology Services">
+      </a>
+      <div class="socials">
+        <a href="#" aria-label="Facebook">FB</a>
+        <a href="#" aria-label="X">X</a>
+        <a href="#" aria-label="LinkedIn">in</a>
+        <a href="#" aria-label="Instagram">IG</a>
+      </div>
+    </div>
+    <div class="col">
+      <h4>Quick Links</h4>
+      <div class="foot-links">
+        <a href="#top">Home</a>
+        <a href="#stack">AI Stack</a>
+        <a href="#sprint">The Sprint</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+    <div class="col">
+      <h4>Popular Courses</h4>
+      <div class="foot-links">
+        <a href="ai-for-beginners.html">AI for Beginners</a>
+        <a href="ai-for-students.html">AI for Students (Age 11–15)</a>
+        <a href="#">Certified AI Professional</a>
+        <a href="#enroll">Enroll Now</a>
+      </div>
+    </div>
+    <div class="col">
+      <h4>Get In Touch</h4>
+      <div class="footer-contact">
+        <div class="footer-item">
+          <svg class="contact-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+919325398862">(+91) 9325398862</a>
+        </div>
+        <div class="footer-item">
+          <svg class="contact-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          <a href="mailto:konkantechnology@gmail.com">konkantechnology@gmail.com</a>
+        </div>
+        <div class="footer-item">
+          <svg class="contact-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+          <a href="https://konkantechnologies.in">konkantechnologies.in</a>
+        </div>
+        <div class="footer-item">
+          <svg class="contact-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Near Amul Parlour, Dighi Road, Mhasla, Raigad – 402105</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <span class="mono">© 2026 Konkan Technology Services · Pricing on request — contact us for a free quote</span>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  revealEls.forEach(el => io.observe(el));
+
+  const faqHeads = document.querySelectorAll('.faq-q');
+  const faqBodies = document.querySelectorAll('.faq-a');
+  faqHeads.forEach((h, i) => {
+    h.addEventListener('click', () => {
+      const item = h.closest('.faq-item');
+      const body = faqBodies[i];
+      const open = item.classList.toggle('open');
+      body.style.maxHeight = open ? body.scrollHeight + 'px' : '0px';
+    });
+  });
+
+  const mkForm = document.getElementById('mkForm');
+  if (mkForm) {
+    mkForm.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      const name = (document.getElementById('mname').value || '').trim();
+      const role = (document.getElementById('mrole').value || '').trim();
+      const company = (document.getElementById('mcompany').value || '').trim();
+      const phone = (document.getElementById('mphone').value || '').trim();
+      const email = (document.getElementById('memail').value || '').trim();
+      const msg = `Hello Konkan Technology Services,%0A%0A*AI for Marketing Professionals — Enquiry*%0AName: ${encodeURIComponent(name)}%0ARole: ${encodeURIComponent(role)}%0ACompany: ${encodeURIComponent(company)}%0APhone: ${encodeURIComponent(phone)}%0AEmail: ${encodeURIComponent(email)}`;
+      window.open('https://wa.me/919325398862?text=' + msg, '_blank');
+      const btn = this.querySelector('button');
+      if (btn) { btn.textContent = 'Opening WhatsApp…'; setTimeout(() => { btn.textContent = 'Enroll Now'; mkForm.reset(); }, 4000); }
+    });
+  }
+</script>
+
+</body>
+</html>
