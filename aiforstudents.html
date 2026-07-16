@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI for Students (Age 11–15) — KonkanTech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1220;
+    --paper:#F5F7FB;
+    --paper-alt:#E9EEF7;
+    --teal:#000090;
+    --teal-dark:#00005C;
+    --rust:#1D4ED8;
+    --rust-dark:#1438A8;
+    --mint:#D6E0FF;
+    --line:#D2DAE8;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper); color:var(--ink); font-family:'Poppins', sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+  h1,h2,h3,h4{font-family:'Poppins', sans-serif; font-weight:700; letter-spacing:-0.01em; line-height:1.15;}
+  .mono{font-family:'IBM Plex Mono', monospace; text-transform:uppercase; letter-spacing:0.12em; font-size:0.72rem; font-weight:500;}
+  a{color:inherit;} img,svg{display:block; max-width:100%;}
+  button, input, select{font-family:'Poppins', sans-serif;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{outline:2px solid var(--rust); outline-offset:3px;}
+
+  /* NAV */
+  header{position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.96); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
+  .navwrap{max-width:1180px; margin:0 auto; padding:16px 32px; display:flex; align-items:center; justify-content:space-between; gap:16px;}
+  .logo{display:flex; align-items:center; gap:10px; flex-shrink:0;}
+  .logo-img{height:40px; width:auto; display:block;}
+  .nav-links{display:flex; gap:30px; font-size:0.9rem; font-weight:500;}
+  .nav-links a{text-decoration:none; opacity:0.75; transition:opacity 0.2s;}
+  .nav-links a:hover{opacity:1;}
+  .btn{background:var(--rust); color:var(--white); border:none; padding:12px 22px; border-radius:100px; font-weight:600; font-size:0.88rem; text-decoration:none; display:inline-block; cursor:pointer; transition:background 0.2s, transform 0.15s;}
+  .btn:hover{background:var(--rust-dark); transform:translateY(-1px);}
+  .btn-ghost{background:transparent; color:var(--ink); border:1.5px solid var(--line); padding:12px 22px; border-radius:100px; font-weight:600; font-size:0.88rem; text-decoration:none; display:inline-block; transition:border-color 0.2s;}
+  .btn-ghost:hover{border-color:var(--teal);}
+  @media (max-width:860px){ .nav-links{display:none;} }
+
+  /* SPLIT HERO */
+  .hero{padding:80px 0 64px; background:linear-gradient(160deg, var(--paper) 0%, var(--mint) 100%);}
+  .hero-split{display:grid; grid-template-columns:1.05fr 0.95fr; gap:48px; align-items:center; text-align:left;}
+  .hero-split .eyebrow{color:var(--teal); margin-bottom:18px; display:inline-flex; align-items:center; gap:10px;}
+  .hero-split .eyebrow::before{content:''; width:22px; height:1px; background:var(--teal);}
+  .hero-split h1{font-size:clamp(2.1rem,5vw,3.2rem); margin-bottom:18px;}
+  .hero-split h1 em{font-style:normal; color:var(--teal);}
+  .hero-split p.lead{font-size:1.12rem; color:#31423C; max-width:560px; margin-bottom:14px;}
+  .hero-split .meta{font-family:'IBM Plex Mono'; font-size:0.74rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--teal); margin-bottom:26px;}
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+  .hero-art{position:relative; border-radius:22px; overflow:hidden; background:linear-gradient(150deg, var(--teal) 0%, var(--rust) 100%); min-height:340px; display:flex; align-items:center; justify-content:center;}
+  .hero-art .ph{text-align:center; color:var(--white); padding:30px;}
+  .hero-art .ph .emoji{font-size:3.4rem;}
+  .hero-art .ph .cap{font-family:'IBM Plex Mono'; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; opacity:0.85; margin-top:14px;}
+  @media (max-width:860px){ .hero-split{grid-template-columns:1fr;} .hero-art{min-height:240px;} }
+
+  /* SECTION SHELL */
+  section.block{padding:80px 0;}
+  .section-head{max-width:680px; margin:0 auto 48px; text-align:center;}
+  .section-head .mono{color:var(--teal); margin-bottom:14px; display:block;}
+  .section-head h2{font-size:clamp(1.8rem,3.4vw,2.4rem);}
+  .section-head p{color:#4A5A54; margin-top:14px; font-size:1rem;}
+
+  /* ICON CARDS (3) */
+  .icon-cards{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:920px; margin:0 auto;}
+  @media (max-width:760px){ .icon-cards{grid-template-columns:1fr;} }
+  .icon-card{background:var(--white); border:1px solid var(--line); border-radius:18px; padding:30px 24px; text-align:center;}
+  .icon-card .ic{width:58px; height:58px; border-radius:16px; background:var(--mint); color:var(--teal); display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-size:1.6rem;}
+  .icon-card h3{font-size:1.12rem; color:var(--teal);}
+  .icon-card p{font-size:0.9rem; color:#31423C; margin-top:8px;}
+
+  /* CHECKLIST */
+  .checklist{max-width:680px; margin:0 auto; display:flex; flex-direction:column; gap:12px;}
+  .check-item{display:flex; gap:12px; align-items:center; background:var(--paper-alt); border:1px solid var(--line); border-radius:12px; padding:14px 18px; font-size:0.95rem;}
+  .check-item .ck{width:22px; height:22px; border-radius:50%; background:var(--teal); color:var(--white); display:flex; align-items:center; justify-content:center; font-size:0.72rem; flex-shrink:0;}
+
+  /* WEEK PATH (horizontal, not accordion) */
+  .week-path{display:flex; gap:0; overflow-x:auto; padding:14px 0 6px;}
+  .week-node{flex:1 1 155px; min-width:155px; position:relative; padding:0 7px;}
+  .week-node .dot{width:46px; height:46px; border-radius:50%; background:var(--teal); color:var(--white); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1.05rem; margin:0 auto 14px; position:relative; z-index:2;}
+  .week-node:not(:last-child)::after{content:''; position:absolute; top:23px; left:50%; width:100%; height:2px; background:var(--line); z-index:1;}
+  .week-card{background:var(--white); border:1px solid var(--line); border-radius:14px; padding:16px; text-align:center;}
+  .week-card .wk{font-family:'IBM Plex Mono'; font-size:0.62rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--rust);}
+  .week-card h4{font-size:0.92rem; margin:7px 0; color:var(--ink); font-weight:600;}
+  .week-card .tool{font-size:0.78rem; color:var(--teal); font-weight:600;}
+  @media (max-width:760px){ .week-path{flex-wrap:wrap;} .week-node{flex:1 1 45%;} .week-node::after{display:none;} }
+
+  /* TOOLS ROW */
+  .tool-row{display:flex; flex-wrap:wrap; justify-content:center; gap:16px; max-width:880px; margin:0 auto;}
+  .tool-chip{display:flex; align-items:center; gap:10px; background:var(--white); border:1px solid var(--line); border-radius:100px; padding:12px 22px; font-weight:600; font-size:0.92rem;}
+  .tool-chip .ic{width:26px; height:26px; border-radius:50%; background:var(--mint); color:var(--teal); display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:700;}
+  .tool-chip img.tc-ic{width:24px; height:24px; border-radius:6px; object-fit:contain; background:var(--white); padding:2px;}
+  .tool-note{text-align:center; font-size:0.84rem; color:var(--teal); margin-top:16px; font-weight:600;}
+
+  /* PROJECT CARDS */
+  .proj-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:22px; max-width:900px; margin:0 auto;}
+  @media (max-width:720px){ .proj-grid{grid-template-columns:1fr;} }
+  .proj-card{background:var(--white); border:1px solid var(--line); border-radius:18px; padding:28px 26px; display:flex; flex-direction:column; gap:10px;}
+  .proj-card .tag{font-family:'IBM Plex Mono'; font-size:0.66rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--rust);}
+  .proj-card h3{font-size:1.2rem; color:var(--teal);}
+  .proj-card p{font-size:0.92rem; color:#31423C;}
+
+  /* SAFETY STRIP */
+  .safety{background:var(--mint); border-radius:18px; padding:30px; display:grid; grid-template-columns:repeat(4,1fr); gap:18px; max-width:980px; margin:0 auto;}
+  @media (max-width:760px){ .safety{grid-template-columns:1fr 1fr;} }
+  .s-item{display:flex; gap:10px; align-items:flex-start;}
+  .s-item .tick{width:22px; height:22px; border-radius:50%; background:var(--teal); color:var(--white); display:flex; align-items:center; justify-content:center; font-size:0.72rem; flex-shrink:0; margin-top:2px;}
+  .s-item p{font-size:0.86rem; color:var(--teal-dark); font-weight:600; line-height:1.4;}
+
+  /* TESTIMONIALS */
+  .testi{background:var(--white);}
+  .testi-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:980px; margin:0 auto;}
+  @media (max-width:860px){ .testi-grid{grid-template-columns:1fr;} }
+  .t-card{background:var(--paper-alt); border:1px solid var(--line); border-radius:16px; padding:24px;}
+  .t-card p{font-size:0.92rem; color:#31423C; font-style:italic;}
+  .t-card .who{margin-top:14px; font-weight:600; font-size:0.88rem; color:var(--teal);}
+
+  /* FAQ */
+  .faq{max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:14px;}
+  .faq-item{background:var(--white); border:1px solid var(--line); border-radius:14px; overflow:hidden;}
+  .faq-q{padding:18px 22px; cursor:pointer; font-weight:600; display:flex; justify-content:space-between; align-items:center; gap:12px;}
+  .faq-q .plus{color:var(--teal); font-size:1.3rem; transition:transform 0.3s;}
+  .faq-item.open .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height 0.35s ease;}
+  .faq-a-inner{padding:0 22px 18px; font-size:0.9rem; color:#31423C;}
+
+  /* DEMO / LEAD FORM */
+  .enroll{background:var(--teal-dark); color:var(--white);}
+  .enroll .section-head .mono{color:var(--mint);}
+  .enroll .section-head h2{color:var(--white);}
+  .enroll .section-head p{color:#B9CFC9;}
+  .enroll-box{max-width:560px; margin:0 auto; background:#0E1815; border-radius:18px; padding:30px;}
+  .enroll-box label{display:block; font-family:'IBM Plex Mono'; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.1em; color:#8FB3AB; margin:14px 0 8px;}
+  .enroll-box label:first-child{margin-top:0;}
+  .enroll-box input{width:100%; background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:12px 14px; color:var(--ink); font-size:0.9rem;}
+  .enroll-box .btn{width:100%; margin-top:20px; background:var(--rust); color:var(--white); border:none; padding:14px; border-radius:8px; font-weight:600; font-size:0.95rem; cursor:pointer;}
+  .enroll-box .btn:hover{background:var(--rust-dark);}
+  .enroll-box .wa{display:block; text-align:center; margin-top:14px; font-size:0.84rem; color:#B9CFC9;}
+  .enroll-box .wa a{color:var(--mint); font-weight:600; text-decoration:none;}
+
+  /* FINAL BANNER */
+  .banner{padding:70px 0; text-align:center;}
+  .banner h2{font-size:clamp(1.7rem,3.2vw,2.4rem); margin-bottom:20px; max-width:760px; margin-left:auto; margin-right:auto;}
+  .banner .contact-line{margin-top:22px; font-size:0.9rem; color:#4A5A54;}
+  .banner .contact-line a{color:var(--teal); font-weight:600; text-decoration:none;}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line); padding:48px 0; background:var(--white);}
+  footer .wrap{display:grid; grid-template-columns:1.4fr 1fr 1fr 1.4fr; gap:28px;}
+  @media (max-width:860px){ footer .wrap{grid-template-columns:1fr 1fr;} }
+  @media (max-width:560px){ footer .wrap{grid-template-columns:1fr;} }
+  footer .col h4{font-size:0.95rem; color:var(--teal); margin-bottom:14px;}
+  footer .foot-links{display:flex; flex-direction:column; gap:9px; font-size:0.88rem; font-weight:500;}
+  footer .foot-links a{text-decoration:none; opacity:0.8;}
+  footer .foot-links a:hover{opacity:1;}
+  footer .footer-contact{font-size:0.86rem; line-height:1.95;}
+  footer .footer-item{display:flex; align-items:center; gap:9px; color:var(--teal);}
+  footer .footer-item a{text-decoration:none; color:var(--teal); font-weight:500;}
+  footer .contact-ico{width:16px; height:16px; flex-shrink:0; stroke:var(--teal); fill:none; stroke-width:1.8;}
+  footer .socials{display:flex; gap:10px; margin-top:14px;}
+  footer .socials a{width:34px; height:34px; border-radius:50%; background:var(--paper-alt); color:var(--teal); display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:0.72rem; font-weight:700;}
+  footer .mono{color:#5A6B64; display:block; margin-top:18px;}
+
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity 0.6s ease, transform 0.6s ease;}
+  .reveal.visible{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="navwrap">
+    <a class="logo" href="#top" aria-label="Konkan Technology Services — home">
+      <img class="logo-img" src="Assets/kts-logo.png" alt="Konkan Technology Services">
+    </a>
+    <nav class="nav-links">
+      <a href="#why">Why AI</a>
+      <a href="#right">Is it right?</a>
+      <a href="#journey">6-Week Journey</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#demo" class="btn">Book a Free Demo Class</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-split">
+      <div>
+        <div class="eyebrow mono">AI for Students · Age 11–15</div>
+        <h1>Learn the AI <em>superpowers</em> schools don't teach yet — creatively and safely.</h1>
+        <p class="lead">A safe, screen-smart introduction to AI for your child — built for curious kids, trusted by parents.</p>
+        <div class="meta">5–6 weeks · 1 session/week (90 min) + light practice ≈ 3 hrs/week</div>
+        <div class="hero-ctas">
+          <a href="#demo" class="btn">Book a Free Demo Class</a>
+          <a href="#journey" class="btn-ghost">See the Journey</a>
+        </div>
+      </div>
+      <div class="hero-art" role="img" aria-label="Illustration placeholder: students exploring AI">
+        <div class="ph">
+          <div class="emoji">🧒🤖🎨</div>
+          <div class="cap">Illustration: kids learning AI</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="why">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">For Parents</span>
+      <h2>Why AI skills matter for your child</h2>
+      <p>Not just another screen — real skills for a future we can't yet imagine.</p>
+    </div>
+    <div class="icon-cards">
+      <div class="icon-card reveal"><div class="ic">🚀</div><h3>Future-Ready Skills</h3><p>AI literacy is the new reading & writing. Give your child a head start, not a catch-up.</p></div>
+      <div class="icon-card reveal"><div class="ic">🛡️</div><h3>Safe &amp; Supervised</h3><p>Every session is guided by a real teacher. No dark corners, no unsupervised browsing.</p></div>
+      <div class="icon-card reveal"><div class="ic">🎨</div><h3>Creativity Over Screen Time</h3><p>They build stories, art, and websites — creating, not just consuming.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="right" style="background:var(--white);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Checklist</span>
+      <h2>Is this course right for your child?</h2>
+    </div>
+    <div class="checklist">
+      <div class="check-item reveal"><span class="ck">✓</span><p>Aged 11–15 (middle / high school)</p></div>
+      <div class="check-item reveal"><span class="ck">✓</span><p>No experience needed — just curiosity</p></div>
+      <div class="check-item reveal"><span class="ck">✓</span><p>Curious about tech, AI, or how things work</p></div>
+      <div class="check-item reveal"><span class="ck">✓</span><p>Interested in school clubs, projects, or making things</p></div>
+      <div class="check-item reveal"><span class="ck">✓</span><p>Basic typing helps, but isn't required</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="journey">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">The Journey</span>
+      <h2>A 6-week path, step by step</h2>
+      <p>Visual, project-led, and age-appropriate. Week 6 is an optional showcase.</p>
+    </div>
+    <div class="week-path">
+      <div class="week-node reveal"><div class="dot">1</div><div class="week-card"><div class="wk">Week 1</div><h4>What is AI? Fun analogies + chatbot chat</h4><div class="tool">ChatGPT</div></div></div>
+      <div class="week-node reveal"><div class="dot">2</div><div class="week-card"><div class="wk">Week 2</div><h4>Talking to AI well, prompt basics</h4><div class="tool">ChatGPT</div></div></div>
+      <div class="week-node reveal"><div class="dot">3</div><div class="week-card"><div class="wk">Week 3</div><h4>AI art &amp; presentations</h4><div class="tool">Canva Magic · Midjourney</div></div></div>
+      <div class="week-node reveal"><div class="dot">4</div><div class="week-card"><div class="wk">Week 4</div><h4>Build a simple website, no code</h4><div class="tool">Framer AI · v0.dev</div></div></div>
+      <div class="week-node reveal"><div class="dot">5</div><div class="week-card"><div class="wk">Week 5</div><h4>AI ethics for teens (discussion)</h4><div class="tool">Discussion-based</div></div></div>
+      <div class="week-node reveal"><div class="dot">6</div><div class="week-card"><div class="wk">Week 6 · Optional</div><h4>Showcase &amp; capstone polish</h4><div class="tool">Final presentation</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" style="background:var(--paper-alt);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Tools they'll use</span>
+      <h2>Real tools, guided for kids</h2>
+      <p>The same AI tools grown-ups use — but kid-safe, guided use only.</p>
+    </div>
+    <div class="tool-row">
+      <div class="tool-chip reveal"><img class="tc-ic" src="Assets/chatgpt.png" alt="ChatGPT"> ChatGPT</div>
+      <div class="tool-chip reveal"><img class="tc-ic" src="Assets/canva.png" alt="Canva Magic"> Canva Magic</div>
+      <div class="tool-chip reveal"><span class="ic">MJ</span> Midjourney</div>
+      <div class="tool-chip reveal"><span class="ic">FA</span> Framer AI</div>
+      <div class="tool-chip reveal"><span class="ic">v0</span> v0.dev</div>
+    </div>
+    <div class="tool-note reveal">All tools used under teacher supervision — kid-safe, guided use only.</div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Project Showcase</span>
+      <h2>What your child will create</h2>
+    </div>
+    <div class="proj-grid">
+      <div class="proj-card reveal">
+        <span class="tag">Mini-Project</span>
+        <h3>My AI Portfolio</h3>
+        <p>Three pieces your child is proud of: a story, an artwork, and a 1-page website — all made with AI, guided by a teacher.</p>
+      </div>
+      <div class="proj-card reveal">
+        <span class="tag">Final Capstone</span>
+        <h3>AI for Good</h3>
+        <p>A student-led project solving a real school or community problem — presented to parents at the showcase.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" style="background:var(--mint);">
+  <div class="wrap">
+    <div class="section-head reveal" style="color:var(--teal-dark);">
+      <span class="mono" style="color:var(--teal);">Safety &amp; Trust</span>
+      <h2 style="color:var(--teal-dark);">You're in safe hands</h2>
+    </div>
+    <div class="safety reveal">
+      <div class="s-item"><span class="tick">✓</span><p>Supervised sessions with a real teacher</p></div>
+      <div class="s-item"><span class="tick">✓</span><p>Ethics module is mandatory</p></div>
+      <div class="s-item"><span class="tick">✓</span><p>Small batch sizes</p></div>
+      <div class="s-item"><span class="tick">✓</span><p>Parental consent required</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block testi">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Parent Voices</span>
+      <h2>What parents say</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="t-card reveal"><p>"My daughter made her own website in week 4. I couldn't believe it — and it was all supervised. Worth every rupee."</p><div class="who">— Mrs. Deshmukh, parent of Aarya (13)</div></div>
+      <div class="t-card reveal"><p>"The safety part mattered most to me. The ethics module actually changed how my son thinks online. Thank you KonkanTech."</p><div class="who">— Mr. Patil, parent of Rohan (12)</div></div>
+      <div class="t-card reveal"><p>"He used to just watch videos. Now he builds things. The free demo class convinced us immediately."</p><div class="who">— Mrs. Khan, parent of Imran (14)</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="faq">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">FAQ</span>
+      <h2>Questions parents ask</h2>
+    </div>
+    <div class="faq">
+      <div class="faq-item reveal">
+        <div class="faq-q">Is this safe for my child? <span class="plus">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Yes. Every session is teacher-supervised, the ethics module is mandatory, batches are small, and we require parental consent. No unsupervised browsing, ever.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Does my child need a laptop? <span class="plus">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">A basic laptop or desktop helps for the website-building weeks, but we can guide you on minimum requirements during the free demo class. Tablets work for most sessions.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Is there a certificate? <span class="plus">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Yes — your child receives a Certificate of Completion after the showcase and capstone project.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">What if my child has zero tech background? <span class="plus">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Perfect — that's exactly who this is for. No experience needed. We start from "What is AI?" using fun, everyday analogies.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block enroll" id="demo">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Book a Free Demo Class</span>
+      <h2>Give your child a safe first taste of AI</h2>
+      <p>Leave your details and we'll reach out with the next demo. (Form will connect to WhatsApp / Google Form / CRM later.)</p>
+    </div>
+    <form class="enroll-box reveal" id="demoForm">
+      <label for="pname">Parent Name</label>
+      <input id="pname" type="text" placeholder="Your full name" required>
+      <label for="cage">Child's Age</label>
+      <input id="cage" type="text" placeholder="e.g. 13" required>
+      <label for="dphone">Phone</label>
+      <input id="dphone" type="text" placeholder="Your phone number" required>
+      <label for="demail">Email</label>
+      <input id="demail" type="email" placeholder="Your email" required>
+      <button type="submit" class="btn">Book a Free Demo Class</button>
+      <span class="wa">Or message us on <a href="https://wa.me/919325398862" target="_blank">WhatsApp (+91 9325398862)</a></span>
+    </form>
+  </div>
+</section>
+
+<section class="block banner">
+  <div class="wrap">
+    <h2 class="reveal">Give your child their first real AI skills this summer.</h2>
+    <div class="hero-ctas reveal" style="justify-content:center;">
+      <a href="#demo" class="btn">Book a Free Demo Class</a>
+      <a href="#demo" class="btn-ghost">Get Free Quote</a>
+    </div>
+    <div class="contact-line reveal">
+     📞 <a href="tel:+919325398862">(+91) 9325398862</a> &nbsp;·&nbsp; ✉️ <a href="mailto:konkantechnology@gmail.com">konkantechnology@gmail.com</a><br>
+      📍 Near Amul Parlour, Dighi Road, Mhasla, Raigad – 402105 &nbsp;·&nbsp; <a href="https://wa.me/919325398862" target="_blank">WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="logo" href="#top" aria-label="Konkan Technology Services — home">
+        <img class="logo-img" src="Assets/kts-logo.png" alt="Konkan Technology Services">
+      </a>
+      <div class="socials">
+        <a href="#" aria-label="Facebook">FB</a>
+        <a href="#" aria-label="X">X</a>
+        <a href="#" aria-label="LinkedIn">in</a>
+        <a href="#" aria-label="Instagram">IG</a>
+      </div>
+    </div>
+    <div class="col">
+      <h4>Quick Links</h4>
+      <div class="foot-links">
+        <a href="#top">Home</a>
+        <a href="#why">Why AI</a>
+        <a href="#journey">6-Week Journey</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+    <div class="col">
+      <h4>Popular Courses</h4>
+      <div class="foot-links">
+        <a href="ai-for-beginners.html">AI for Beginners</a>
+        <a href="#">AI for Students (Age 5–10)</a>
+        <a href="#">Certified AI Professional</a>
+        <a href="#demo">Book a Demo</a>
+      </div>
+    </div>
+    <div class="col">
+      <h4>Get In Touch</h4>
+      <div class="footer-contact">
+        <div class="footer-item">
+          <svg class="contact-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+919325398862">(+91) 9325398862</a>
+        </div>
+        <div class="footer-item">
+          <svg class="contact-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          <a href="mailto:konkantechnology@gmail.com">konkantechnology@gmail.com</a>
+        </div>
+        <div class="footer-item">
+          <svg class="contact-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+          <a href="https://konkantechnologies.in">konkantechnologies.in</a>
+        </div>
+        <div class="footer-item">
+          <svg class="contact-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Near Amul Parlour, Dighi Road, Mhasla, Raigad – 402105</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <span class="mono">© 2026 Konkan Technology Services · Pricing on request — contact us for a free quote</span>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  revealEls.forEach(el => io.observe(el));
+
+  const faqHeads = document.querySelectorAll('.faq-q');
+  const faqBodies = document.querySelectorAll('.faq-a');
+  faqHeads.forEach((h, i) => {
+    h.addEventListener('click', () => {
+      const item = h.closest('.faq-item');
+      const body = faqBodies[i];
+      const open = item.classList.toggle('open');
+      body.style.maxHeight = open ? body.scrollHeight + 'px' : '0px';
+    });
+  });
+
+  const demoForm = document.getElementById('demoForm');
+  if (demoForm) {
+    demoForm.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      const pname = (document.getElementById('pname').value || '').trim();
+      const cage = (document.getElementById('cage').value || '').trim();
+      const phone = (document.getElementById('dphone').value || '').trim();
+      const email = (document.getElementById('demail').value || '').trim();
+      const msg = `Hello Konkan Technology Services,%0A%0A*AI for Students (Age 11-15) — Demo Enquiry*%0AParent Name: ${encodeURIComponent(pname)}%0AChild's Age: ${encodeURIComponent(cage)}%0APhone: ${encodeURIComponent(phone)}%0AEmail: ${encodeURIComponent(email)}`;
+      window.open('https://wa.me/919325398862?text=' + msg, '_blank');
+      const btn = this.querySelector('button');
+      if (btn) { btn.textContent = 'Opening WhatsApp…'; setTimeout(() => { btn.textContent = 'Book a Free Demo Class'; demoForm.reset(); }, 4000); }
+    });
+  }
+</script>
+
+</body>
+</html>

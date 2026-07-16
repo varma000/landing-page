@@ -2,6 +2,7 @@
   "version": 2,
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
-    { "source": "/ai-for-beginners", "destination": "/aiforbeginners.html" }
+    { "source": "/ai-for-beginners", "destination": "/aiforbeginners.html" },
+    { "source": "/ai-for-students", "destination": "/aiforstudents.html" }
   ]
 }
