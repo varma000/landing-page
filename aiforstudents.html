@@ -58,6 +58,7 @@
   .hero-split .meta{font-family:'IBM Plex Mono'; font-size:0.74rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--teal); margin-bottom:26px;}
   .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
   .hero-art{position:relative; border-radius:22px; overflow:hidden; background:linear-gradient(150deg, var(--teal) 0%, var(--rust) 100%); min-height:340px; display:flex; align-items:center; justify-content:center;}
+  .hero-art img{width:100%; height:340px; object-fit:cover; display:block;}
   .hero-art .ph{text-align:center; color:var(--white); padding:30px;}
   .hero-art .ph .emoji{font-size:3.4rem;}
   .hero-art .ph .cap{font-family:'IBM Plex Mono'; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; opacity:0.85; margin-top:14px;}
@@ -69,6 +70,10 @@
   .section-head .mono{color:var(--teal); margin-bottom:14px; display:block;}
   .section-head h2{font-size:clamp(1.8rem,3.4vw,2.4rem);}
   .section-head p{color:#4A5A54; margin-top:14px; font-size:1rem;}
+
+  /* MEDIA BANNERS (new stock images, not from Assets/) */
+  .media-banner{margin:0 auto 48px; max-width:860px;}
+  .media-banner img{width:100%; max-height:360px; object-fit:cover; border-radius:18px; box-shadow:0 14px 36px rgba(11,18,32,0.14);}
 
   /* ICON CARDS (3) */
   .icon-cards{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:920px; margin:0 auto;}
@@ -204,11 +209,8 @@
           <a href="#journey" class="btn-ghost">See the Journey</a>
         </div>
       </div>
-      <div class="hero-art" role="img" aria-label="Illustration placeholder: students exploring AI">
-        <div class="ph">
-          <div class="emoji">🧒🤖🎨</div>
-          <div class="cap">Illustration: kids learning AI</div>
-        </div>
+      <div class="hero-art" role="img" aria-label="Students learning AI in a bright, supervised classroom">
+        <img src="students-img/hero-students.jpg" alt="Students learning AI in a supervised classroom">
       </div>
     </div>
   </div>
@@ -221,6 +223,7 @@
       <h2>Why AI skills matter for your child</h2>
       <p>Not just another screen — real skills for a future we can't yet imagine.</p>
     </div>
+    <div class="media-banner reveal"><img src="students-img/parent-child.jpg" alt="A parent and child learning together, safely supervised"></div>
     <div class="icon-cards">
       <div class="icon-card reveal"><div class="ic">🚀</div><h3>Future-Ready Skills</h3><p>AI literacy is the new reading & writing. Give your child a head start, not a catch-up.</p></div>
       <div class="icon-card reveal"><div class="ic">🛡️</div><h3>Safe &amp; Supervised</h3><p>Every session is guided by a real teacher. No dark corners, no unsupervised browsing.</p></div>
@@ -287,6 +290,7 @@
       <span class="mono">Project Showcase</span>
       <h2>What your child will create</h2>
     </div>
+    <div class="media-banner reveal"><img src="students-img/showcase.jpg" alt="A student proudly presenting their AI project"></div>
     <div class="proj-grid">
       <div class="proj-card reveal">
         <span class="tag">Mini-Project</span>
