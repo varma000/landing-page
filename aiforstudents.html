@@ -155,6 +155,15 @@
   /* FINAL BANNER */
   .banner{padding:70px 0; text-align:center;}
   .banner h2{font-size:clamp(1.7rem,3.2vw,2.4rem); margin-bottom:20px; max-width:760px; margin-left:auto; margin-right:auto;}
+  .contact-row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:24px;}
+  .contact-pill{display:flex; align-items:center; gap:10px; background:var(--white); border:1px solid var(--line); border-radius:12px; padding:12px 20px; color:var(--ink); text-decoration:none; min-width:210px; justify-content:center; transition:border-color .2s;}
+  .contact-pill:hover{border-color:var(--teal);}
+  .contact-pill .ic{font-size:1.4rem;}
+  .contact-pill .txt{text-align:left; line-height:1.25;}
+  .contact-pill strong{display:block; color:var(--teal); font-size:0.74rem; text-transform:uppercase; letter-spacing:0.06em;}
+  .contact-pill .num{font-weight:600; font-size:0.98rem;}
+  .contact-sub{margin-top:14px; font-size:0.85rem; color:var(--muted); text-align:center;}
+  .contact-sub a{color:var(--teal); font-weight:600; text-decoration:none;}
   .banner .contact-line{margin-top:22px; font-size:0.9rem; color:#4A5A54;}
   .banner .contact-line a{color:var(--teal); font-weight:600; text-decoration:none;}
 
@@ -391,9 +400,18 @@
       <a href="#demo" class="btn">Book a Free Demo Class</a>
       <a href="#demo" class="btn-ghost">Get Free Quote</a>
     </div>
-    <div class="contact-line reveal">
-     📞 <a href="tel:+919325398862">(+91) 9325398862</a> &nbsp;·&nbsp; ✉️ <a href="mailto:konkantechnology@gmail.com">konkantechnology@gmail.com</a><br>
-      📍 Near Amul Parlour, Dighi Road, Mhasla, Raigad – 402105 &nbsp;·&nbsp; <a href="https://wa.me/919325398862" target="_blank">WhatsApp</a>
+    <div class="contact-row">
+      <a class="contact-pill" href="tel:+919325398862">
+        <span class="ic">📞</span>
+        <span class="txt"><strong>Call / Phone</strong><span class="num">(+91) 9325398862</span></span>
+      </a>
+      <a class="contact-pill" href="https://wa.me/919325398862" target="_blank">
+        <span class="ic">💬</span>
+        <span class="txt"><strong>WhatsApp</strong><span class="num">(+91) 9325398862</span></span>
+      </a>
+    </div>
+    <div class="contact-sub">
+      ✉️ <a href="mailto:konkantechnology@gmail.com">konkantechnology@gmail.com</a> &nbsp;·&nbsp; 📍 Near Amul Parlour, Dighi Road, Mhasla, Raigad – 402105
     </div>
   </div>
 </section>
