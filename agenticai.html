@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic AI — KonkanTech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1220;
+    --bg:#FFFFFF;
+    --bg-soft:#F4F7FB;
+    --bg-soft2:#ECF1F8;
+    --teal:#000090;            /* brand royal blue */
+    --accent:#1D4ED8;          /* lighter royal-blue */
+    --line:#DCE3EE;
+    --white:#FFFFFF;
+    --muted:#56657A;
+    --text:#0B1220;
+    --green:#15924B;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg); color:var(--text); font-family:'Poppins', sans-serif; line-height:1.65; -webkit-font-smoothing:antialiased;}
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;} }
+  h1,h2,h3,h4{font-weight:700; letter-spacing:-0.01em; line-height:1.12;}
+  .mono{font-family:'IBM Plex Mono', monospace; text-transform:uppercase; letter-spacing:0.1em; font-size:0.7rem; color:var(--accent);}
+  a{color:inherit; text-decoration:none;}
+  img{display:block; max-width:100%;}
+  button,input,select,textarea{font-family:'Poppins', sans-serif;}
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+
+  /* TOP BAR */
+  .topbar{position:sticky; top:0; z-index:60; background:rgba(255,255,255,0.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
+  .topbar .row{max-width:1180px; margin:0 auto; padding:14px 28px; display:flex; align-items:center; justify-content:space-between; gap:16px;}
+  .logo{display:flex; align-items:center; gap:10px;}
+  .logo-img{height:38px; width:auto;}
+  .topnav{display:flex; gap:4px; flex:1; justify-content:center; overflow-x:auto; scrollbar-width:none;}
+  .topnav::-webkit-scrollbar{display:none;}
+  .topnav a{padding:8px 12px; border-radius:8px; font-size:0.84rem; color:var(--muted); font-weight:500; white-space:nowrap; transition:background .15s, color .15s;}
+  .topnav a:hover, .topnav a.active{background:var(--bg-soft); color:var(--teal);}
+  .top-cta{background:var(--teal); color:var(--white); border:none; padding:11px 20px; border-radius:8px; font-weight:600; font-size:0.85rem; cursor:pointer; transition:background .2s; flex-shrink:0;}
+  .top-cta:hover{background:#00006e;}
+  @media (max-width:900px){ .topnav{display:none;} }
+
+  /* HERO */
+  .hero{padding:64px 0 50px; background:linear-gradient(160deg, var(--bg) 0%, var(--bg-soft2) 100%);}
+  .hero-grid{display:grid; grid-template-columns:1.05fr 1fr; gap:54px; align-items:center; max-width:1120px; margin:0 auto;}
+  .hero .eyebrow{color:var(--teal); margin-bottom:16px; display:inline-flex; align-items:center; gap:10px;}
+  .hero .eyebrow::before{content:''; width:22px; height:1px; background:var(--teal);}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.4rem);}
+  .hero h1 em{font-style:normal; color:var(--accent);}
+  .hero p.lead{font-size:1.05rem; color:var(--muted); max-width:520px; margin:16px 0 26px;}
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{background:var(--teal); color:var(--white); border:none; padding:13px 24px; border-radius:8px; font-weight:600; font-size:0.9rem; cursor:pointer; transition:background .2s, transform .15s; display:inline-block; text-decoration:none;}
+  .btn:hover{background:#00006e; transform:translateY(-1px);}
+  .btn-ghost{background:transparent; color:var(--text); border:1.5px solid var(--line); padding:13px 24px; border-radius:8px; font-weight:600; font-size:0.9rem; cursor:pointer; transition:border-color .2s; display:inline-block; text-decoration:none;}
+  .btn-ghost:hover{border-color:var(--accent);}
+  .hero-visual{border-radius:22px; overflow:hidden; box-shadow:0 20px 50px rgba(11,18,32,0.14);}
+  .hero-visual img{width:100%; height:420px; object-fit:cover;}
+  @media (max-width:860px){ .hero-grid{grid-template-columns:1fr;} .hero-visual img{height:300px;} }
+
+  /* STAT (metric) */
+  .strip{background:var(--teal); color:var(--white); border-radius:18px; padding:28px 22px; display:grid; grid-template-columns:repeat(4,1fr); gap:14px; max-width:1120px; margin:0 auto; position:relative; top:-30px;}
+  .strip .stat{text-align:center; border-right:1px solid rgba(255,255,255,0.16);}
+  .strip .stat:last-child{border-right:none;}
+  .strip .big{font-family:'IBM Plex Mono'; font-size:1.8rem; font-weight:600; color:#C9D7FF;}
+  .strip .lbl{font-size:0.8rem; color:#D6E0FF; margin-top:4px;}
+  @media (max-width:680px){ .strip{grid-template-columns:1fr 1fr;} .strip .stat:nth-child(2){border-right:none;} }
+
+  section.block{padding:78px 0;}
+  .section-head{max-width:720px; margin:0 auto 46px; text-align:center;}
+  .section-head .mono{display:block; margin-bottom:12px;}
+  .section-head h2{font-size:clamp(1.8rem,3.4vw,2.4rem);}
+  .section-head p{color:var(--muted); margin-top:12px; font-size:1rem;}
+
+  /* CAPABILITY GRID (bento-ish) */
+  .cap{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; max-width:1040px; margin:0 auto;}
+  .cap .c{border:1px solid var(--line); border-radius:16px; padding:26px; background:var(--white); transition:transform .15s, box-shadow .2s;}
+  .cap .c:hover{transform:translateY(-3px); box-shadow:0 14px 34px rgba(11,18,32,0.08);}
+  .cap .c .ic{width:48px; height:48px; border-radius:13px; background:var(--bg-soft2); color:var(--teal); display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin-bottom:14px;}
+  .cap .c h3{font-size:1.1rem; color:var(--ink);}
+  .cap .c p{font-size:0.88rem; color:var(--muted); margin-top:8px;}
+  @media (max-width:760px){ .cap{grid-template-columns:1fr;} }
+
+  /* HOW IT WORKS (steps) */
+  .steps{background:var(--bg-soft);}
+  .stepwrap{max-width:900px; margin:0 auto; display:flex; flex-direction:column; gap:18px;}
+  .step{display:grid; grid-template-columns:64px 1fr; gap:20px; align-items:flex-start; background:var(--white); border:1px solid var(--line); border-radius:16px; padding:22px 24px;}
+  .step .num{width:52px; height:52px; border-radius:14px; background:var(--teal); color:var(--white); display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono'; font-weight:600; font-size:1.1rem;}
+  .step .b h3{font-size:1.12rem; color:var(--ink);}
+  .step .b p{font-size:0.9rem; color:var(--muted); margin-top:6px;}
+  .step .b .tool{font-family:'IBM Plex Mono'; font-size:0.72rem; color:var(--accent); margin-top:8px;}
+
+  /* DUAL VISUAL */
+  .dual{display:grid; grid-template-columns:1fr 1fr; gap:22px; max-width:980px; margin:0 auto;}
+  .dual .v img{width:100%; height:240px; object-fit:cover; border-radius:16px; border:1px solid var(--line);}
+  .dual .v .cap2{font-size:0.82rem; color:var(--muted); margin-top:10px; text-align:center;}
+
+  /* CURRICULUM (weeks) */
+  .wk{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; max-width:1040px; margin:0 auto;}
+  .wk .w{border:1px solid var(--line); border-radius:16px; padding:22px; background:var(--white);}
+  .wk .w .wn{font-family:'IBM Plex Mono'; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent);}
+  .wk .w h3{font-size:1.05rem; margin:8px 0; color:var(--ink);}
+  .wk .w .ex{font-size:0.84rem; color:var(--muted); background:var(--bg-soft); border-left:3px solid var(--teal); border-radius:8px; padding:9px 12px; margin-top:10px;}
+  @media (max-width:760px){ .wk{grid-template-columns:1fr;} }
+
+  /* PROJECTS */
+  .proj{display:grid; grid-template-columns:repeat(2,1fr); gap:20px; max-width:980px; margin:0 auto;}
+  .proj .pc{background:var(--white); border:1px solid var(--line); border-radius:16px; overflow:hidden;}
+  .proj .pc img{width:100%; height:220px; object-fit:cover;}
+  .proj .pc .body{padding:22px 24px;}
+  .proj .pc .tag{font-family:'IBM Plex Mono'; font-size:0.66rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent);}
+  .proj .pc h3{font-size:1.18rem; color:var(--ink); margin:6px 0;}
+  .proj .pc p{font-size:0.88rem; color:var(--muted);}
+  @media (max-width:720px){ .proj{grid-template-columns:1fr;} }
+
+  /* RESULTS */
+  .results{background:var(--teal); color:var(--white);}
+  .results .section-head .mono{color:#C9D7FF;}
+  .results .section-head h2{color:var(--white);}
+  .results .section-head p{color:#D6E0FF;}
+  .resgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; max-width:840px; margin:0 auto;}
+  .res{background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.18); border-radius:14px; padding:26px; text-align:center;}
+  .res .big{font-family:'IBM Plex Mono'; font-size:2.2rem; font-weight:600; color:#C9D7FF;}
+  .res .lbl{font-size:0.86rem; color:#D6E0FF; margin-top:6px;}
+
+  /* TESTIMONIALS */
+  .testi-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; max-width:1040px; margin:0 auto;}
+  @media (max-width:860px){ .testi-grid{grid-template-columns:1fr;} }
+  .tcard{background:var(--bg-soft); border:1px solid var(--line); border-radius:14px; padding:22px;}
+  .tcard p{font-size:0.9rem; color:var(--text); font-style:italic;}
+  .tcard .who{margin-top:14px; font-weight:600; font-size:0.86rem; color:var(--teal);}
+
+  /* FAQ */
+  .faq{max-width:780px; margin:0 auto; display:flex; flex-direction:column; gap:12px;}
+  .faq-item{background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; overflow:hidden;}
+  .faq-q{padding:17px 22px; cursor:pointer; font-weight:600; display:flex; justify-content:space-between; gap:12px;}
+  .faq-q .plus{color:var(--accent); font-size:1.3rem; transition:transform .3s;}
+  .faq-item.open .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height .35s ease;}
+  .faq-a-inner{padding:0 22px 17px; font-size:0.9rem; color:var(--muted);}
+
+  /* ENROLL FORM */
+  .enroll{background:var(--bg-soft2);}
+  .enroll-box{max-width:560px; margin:0 auto; background:var(--white); border:1px solid var(--line); border-radius:16px; padding:30px;}
+  .enroll-box label{display:block; font-family:'IBM Plex Mono'; font-size:0.66rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--teal); margin:14px 0 8px;}
+  .enroll-box label:first-child{margin-top:0;}
+  .enroll-box input{width:100%; background:var(--bg-soft); border:1px solid var(--line); border-radius:8px; padding:12px 14px; color:var(--ink); font-size:0.9rem;}
+  .enroll-box .btn{width:100%; margin-top:20px; background:var(--teal); color:var(--white); border:none; padding:14px; border-radius:8px; font-weight:600; font-size:0.95rem; cursor:pointer;}
+  .enroll-box .btn:hover{background:#00006e;}
+  .enroll-box .wa{display:block; text-align:center; margin-top:14px; font-size:0.84rem; color:var(--muted);}
+  .enroll-box .wa a{color:var(--teal); font-weight:600; text-decoration:none;}
+
+  /* CONTACT PILLS (same number, phone left / whatsapp right) */
+  .banner{padding:70px 0; text-align:center;}
+  .banner h2{font-size:clamp(1.7rem,3.2vw,2.4rem); margin-bottom:20px; max-width:760px; margin-left:auto; margin-right:auto;}
+  .contact-row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:24px;}
+  .contact-pill{display:flex; align-items:center; gap:10px; background:var(--white); border:1px solid var(--line); border-radius:12px; padding:12px 20px; color:var(--ink); text-decoration:none; min-width:210px; justify-content:center; transition:border-color .2s;}
+  .contact-pill:hover{border-color:var(--teal);}
+  .contact-pill .ic{font-size:1.4rem;}
+  .contact-pill .txt{text-align:left; line-height:1.25;}
+  .contact-pill strong{display:block; color:var(--teal); font-size:0.74rem; text-transform:uppercase; letter-spacing:0.06em;}
+  .contact-pill .num{font-weight:600; font-size:0.98rem;}
+  .contact-sub{margin-top:14px; font-size:0.85rem; color:var(--muted); text-align:center;}
+  .contact-sub a{color:var(--teal); font-weight:600; text-decoration:none;}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line); padding:46px 0; background:var(--bg-soft);}
+  footer .wrap{max-width:1180px; margin:0 auto; padding:0 28px; display:grid; grid-template-columns:1.4fr 1fr 1fr 1.4fr; gap:26px;}
+  @media (max-width:860px){ footer .wrap{grid-template-columns:1fr 1fr;} }
+  @media (max-width:560px){ footer .wrap{grid-template-columns:1fr;} }
+  footer .col h4{font-size:0.95rem; color:var(--accent); margin-bottom:14px;}
+  footer .fl{display:flex; flex-direction:column; gap:9px; font-size:0.88rem; font-weight:500;}
+  footer .fl a{color:var(--muted);}
+  footer .fl a:hover{color:var(--teal);}
+  footer .fc{font-size:0.85rem; line-height:1.95; color:var(--muted);}
+  footer .fi{display:flex; align-items:center; gap:9px; color:var(--muted);}
+  footer .fi a{color:var(--muted); text-decoration:none; font-weight:500;}
+  footer .fi a:hover{color:var(--teal);}
+  footer .ico{width:15px; height:15px; flex-shrink:0; stroke:var(--accent); fill:none; stroke-width:1.8;}
+  footer .socials{display:flex; gap:10px; margin-top:14px;}
+  footer .socials a{width:34px; height:34px; border-radius:50%; background:var(--white); color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:700; border:1px solid var(--line);}
+  footer .copy{display:block; margin-top:18px; font-family:'IBM Plex Mono'; font-size:0.7rem; color:var(--muted);}
+
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.visible{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="row">
+    <a class="logo" href="#top" aria-label="Konkan Technology Services — home">
+      <img class="logo-img" src="Assets/kts-logo.png" alt="Konkan Technology Services">
+    </a>
+    <nav class="topnav">
+      <a href="#top" class="active">Overview</a>
+      <a href="#cap">Capabilities</a>
+      <a href="#how">How it works</a>
+      <a href="#curriculum">Curriculum</a>
+      <a href="#projects">Projects</a>
+      <a href="#faq">FAQ</a>
+      <a href="#enroll">Enroll</a>
+    </nav>
+    <a href="#enroll" class="top-cta">Enroll Now</a>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow mono">Agentic AI — Premium</div>
+      <h1>Put AI to work that <em>thinks, plans, and acts on its own.</em></h1>
+      <p class="lead">Go beyond chat. Build autonomous agents that reason, use tools, and run real multi-step workflows — the most advanced KonkanTech course.</p>
+      <div class="hero-ctas">
+        <a href="#enroll" class="btn">Enroll Now</a>
+        <a href="#curriculum" class="btn-ghost">See Curriculum</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="agentic-img/hero-agentic.jpg" alt="Agentic AI concept — autonomous workflow">
+    </div>
+  </div>
+  <div class="strip reveal">
+    <div class="stat"><div class="big">6</div><div class="lbl">Week Deep Dive</div></div>
+    <div class="stat"><div class="big">8+</div><div class="lbl">Agent Frameworks</div></div>
+    <div class="stat"><div class="big">3</div><div class="lbl">Live Agents Built</div></div>
+    <div class="stat"><div class="big">1</div><div class="lbl">Flagship Capstone</div></div>
+  </div>
+</section>
+
+<section class="block" id="cap">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">What you'll build</span>
+      <h2>Capabilities of an Agentic AI system</h2>
+      <p>Not prompts — autonomous, goal-driven systems that get things done.</p>
+    </div>
+    <div class="cap">
+      <div class="c reveal"><div class="ic">🧠</div><h3>Reasoning &amp; Planning</h3><p>Agents break goals into steps, plan, and self-correct using modern reasoning loops.</p></div>
+      <div class="c reveal"><div class="ic">🔧</div><h3>Tool Use</h3><p>Connect agents to APIs, databases, code, and the web so they can act, not just answer.</p></div>
+      <div class="c reveal"><div class="ic">🤝</div><h3>Multi-Agent Teams</h3><p>Orchestrate specialist agents that collaborate like a real ops team.</p></div>
+      <div class="c reveal"><div class="ic">🗃️</div><h3>Memory &amp; RAG</h3><p>Give agents long-term memory and retrieval over your own documents.</p></div>
+      <div class="c reveal"><div class="ic">🛡️</div><h3>Guardrails &amp; Safety</h3><p>Add human-in-the-loop checks, limits, and eval so agents stay reliable.</p></div>
+      <div class="c reveal"><div class="ic">📈</div><h3>Observability</h3><p>Trace every decision and cost with dashboards you can trust.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block steps" id="how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">How it works</span>
+      <h2>From goal to autonomous agent</h2>
+    </div>
+    <div class="stepwrap">
+      <div class="step reveal"><div class="num">1</div><div class="b"><h3>Define the goal</h3><p>State the outcome; the agent figures out the path.</p><div class="tool">Frameworks: LangGraph · AutoGen</div></div></div>
+      <div class="step reveal"><div class="num">2</div><div class="b"><h3>Wire tools &amp; memory</h3><p>Connect APIs, code execution, and a knowledge base.</p><div class="tool">Tools: Python · Vector DB · APIs</div></div></div>
+      <div class="step reveal"><div class="num">3</div><div class="b"><h3>Run &amp; observe</h3><p>Let the agent act, then trace and evaluate every step.</p><div class="tool">Observability: LangSmith · Arize</div></div></div>
+      <div class="step reveal"><div class="num">4</div><div class="b"><h3>Add guardrails</h3><p>Human approval, budgets, and safety checks before production.</p><div class="tool">Safety: Evals · Policies</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="dual reveal">
+      <div class="v"><img src="agentic-img/robot-collab.jpg" alt="Human and AI agent collaborating"><div class="cap2">Human + agent collaboration in the loop</div></div>
+      <div class="v"><img src="agentic-img/agent-workflow.jpg" alt="Agent workflow visualization"><div class="cap2">Multi-step autonomous workflow</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="curriculum">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Curriculum</span>
+      <h2>Your 6-week agent build</h2>
+      <p>Tier: Premium · Prerequisites: solid Python + the IT Professionals course (or equivalent).</p>
+    </div>
+    <div class="wk">
+      <div class="w reveal"><div class="wn">Week 1</div><h3>Agent Foundations</h3><p>Reasoning loops, tool-calling, first single-agent.</p><div class="ex">Exercise: Build a tool-using research agent</div></div>
+      <div class="w reveal"><div class="wn">Week 2</div><h3>Memory &amp; RAG</h3><p>Vector stores, retrieval, long-term memory.</p><div class="ex">Exercise: Agent with document memory</div></div>
+      <div class="w reveal"><div class="wn">Week 3</div><h3>Multi-Agent Systems</h3><p>Orchestrate specialist agents that delegate.</p><div class="ex">Exercise: 3-agent task team</div></div>
+      <div class="w reveal"><div class="wn">Week 4</div><h3>Workflows &amp; Code</h3><p>Code-execution agents and API automation.</p><div class="ex">Exercise: Self-coding data agent</div></div>
+      <div class="w reveal"><div class="wn">Week 5</div><h3>Guardrails &amp; Eval</h3><p>Safety, budgets, evals, human-in-the-loop.</p><div class="ex">Exercise: Production-ready agent</div></div>
+      <div class="w reveal"><div class="wn">Week 6</div><h3>Flagship Capstone</h3><p>Ship a monitored, multi-agent system.</p><div class="ex">Exercise: Live agent with dashboard</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="projects">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Projects</span>
+      <h2>Two portfolio agents</h2>
+    </div>
+    <div class="proj">
+      <div class="pc reveal"><img src="agentic-img/neural.jpg" alt="Research agent concept"><div class="body"><span class="tag">Mini-Project · Week 2</span><h3>Research Agent</h3><p>An agent that searches, reads, and summarizes with memory over your docs.</p></div></div>
+      <div class="pc reveal"><img src="agentic-img/automation.jpg" alt="Automation agent concept"><div class="body"><span class="tag">Flagship Capstone · Week 6</span><h3>Ops Automation Agent</h3><p>A multi-agent system that monitors, decides, and acts — with a live dashboard.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block results">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Outcomes</span>
+      <h2>Join 500+ professionals already building with AI</h2>
+    </div>
+    <div class="resgrid">
+      <div class="res reveal"><div class="big">500+</div><div class="lbl">Professionals trained</div></div>
+      <div class="res reveal"><div class="big">97%</div><div class="lbl">Success rate</div></div>
+      <div class="res reveal"><div class="big">5+</div><div class="lbl">Years of experience</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Testimonials</span>
+      <h2>What builders say</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="tcard reveal"><p>"I shipped a multi-agent support bot in week 5 that now handles 40% of our tickets. The capstone is literally in production."</p><div class="who">— Karan, AI Engineer</div></div>
+      <div class="tcard reveal"><p>"The guardrails week saved us from a costly mistake. Finally a course that treats agents like real systems."</p><div class="who">— Neha, Platform Lead</div></div>
+      <div class="tcard reveal"><p>"Went from 'I used ChatGPT' to owning three production agents. Recruiters can't believe the portfolio."</p><div class="who">— Arjun, Backend Engineer</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="faq">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">FAQ</span>
+      <h2>Questions about Agentic AI</h2>
+    </div>
+    <div class="faq">
+      <div class="faq-item reveal"><div class="faq-q">Do I need the IT Professionals course first? <span class="plus">+</span></div><div class="faq-a"><div class="faq-a-inner">It's recommended — this is our Premium tier and assumes solid Python plus API comfort. Equivalent experience is fine.</div></div></div>
+      <div class="faq-item reveal"><div class="faq-q">Will I build a real, running agent? <span class="plus">+</span></div><div class="faq-a"><div class="faq-a-inner">Yes. By Week 6 you'll have a monitored multi-agent system with a live dashboard you can show any team or client.</div></div></div>
+      <div class="faq-item reveal"><div class="faq-q">Is this safe to run in production? <span class="plus">+</span></div><div class="faq-a"><div class="faq-a-inner">We teach guardrails — human-in-the-loop, budgets, evals, and observability — so your agents are reliable, not reckless.</div></div></div>
+      <div class="faq-item reveal"><div class="faq-q">How is this different from the Beginners course? <span class="plus">+</span></div><div class="faq-a"><div class="faq-a-inner">Beginners is a no-code first step. Agentic AI is our most advanced, code-first, Premium course building autonomous systems.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block enroll" id="enroll">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Enroll</span>
+      <h2>Ready to build autonomous AI?</h2>
+      <p>Leave your details — we'll match you to the next Premium cohort. (Form will connect to WhatsApp / Google Form / CRM later.)</p>
+    </div>
+    <form class="enroll-box reveal" id="agForm">
+      <label for="agname">Name</label>
+      <input id="agname" type="text" placeholder="Your full name" required>
+      <label for="agrole">Role</label>
+      <input id="agrole" type="text" placeholder="e.g. AI Engineer / Developer" required>
+      <label for="agcompany">Company</label>
+      <input id="agcompany" type="text" placeholder="Company (optional)">
+      <label for="agphone">Phone</label>
+      <input id="agphone" type="text" placeholder="Your phone number" required>
+      <label for="agemail">Email</label>
+      <input id="agemail" type="email" placeholder="Your email" required>
+      <button type="submit" class="btn">Enroll Now</button>
+      <span class="wa">Or message us on <a href="https://wa.me/919325398862" target="_blank">WhatsApp (+91 9325398862)</a></span>
+    </form>
+  </div>
+</section>
+
+<section class="block banner">
+  <div class="wrap">
+    <h2 class="reveal">Ready to put AI to work?</h2>
+    <div class="hero-ctas reveal" style="justify-content:center;">
+      <a href="#enroll" class="btn">Enroll Now</a>
+      <a href="#enroll" class="btn-ghost">Get Free Quote</a>
+    </div>
+    <div class="contact-row reveal">
+      <a class="contact-pill" href="tel:+919325398862">
+        <span class="ic">📞</span>
+        <span class="txt"><strong>Call / Phone</strong><span class="num">(+91) 9325398862</span></span>
+      </a>
+      <a class="contact-pill" href="https://wa.me/919325398862" target="_blank">
+        <span class="ic">💬</span>
+        <span class="txt"><strong>WhatsApp</strong><span class="num">(+91) 9325398862</span></span>
+      </a>
+    </div>
+    <div class="contact-sub reveal">
+      ✉️ <a href="mailto:konkantechnology@gmail.com">konkantechnology@gmail.com</a> &nbsp;·&nbsp; 📍 Near Amul Parlour, Dighi Road, Mhasla, Raigad – 402105
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="logo" href="#top" aria-label="Konkan Technology Services — home">
+        <img class="logo-img" src="Assets/kts-logo.png" alt="Konkan Technology Services">
+      </a>
+      <div class="socials">
+        <a href="#" aria-label="Facebook">FB</a>
+        <a href="#" aria-label="X">X</a>
+        <a href="#" aria-label="LinkedIn">in</a>
+        <a href="#" aria-label="Instagram">IG</a>
+      </div>
+    </div>
+    <div class="col">
+      <h4>Quick Links</h4>
+      <div class="fl">
+        <a href="#top">Overview</a>
+        <a href="#curriculum">Curriculum</a>
+        <a href="#projects">Projects</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+    <div class="col">
+      <h4>Popular Courses</h4>
+      <div class="fl">
+        <a href="ai-for-beginners.html">AI for Beginners</a>
+        <a href="ai-for-students.html">AI for Students (Age 11–15)</a>
+        <a href="aiformarketing.html">AI for Marketing Professionals</a>
+        <a href="aiformit.html">AI for IT Professionals</a>
+        <a href="#enroll">Enroll Now</a>
+      </div>
+    </div>
+    <div class="col">
+      <h4>Get In Touch</h4>
+      <div class="fc">
+        <div class="fi"><svg class="ico" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:+919325398862">(+91) 9325398862</a></div>
+        <div class="fi"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a href="mailto:konkantechnology@gmail.com">konkantechnology@gmail.com</a></div>
+        <div class="fi"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><a href="https://konkantechnologies.in">konkantechnologies.in</a></div>
+        <div class="fi"><svg class="ico" viewBox="0 0 24 24"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Near Amul Parlour, Dighi Road, Mhasla, Raigad – 402105</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <span class="copy">© 2026 Konkan Technology Services · Pricing on request — contact us for a free quote</span>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  revealEls.forEach(el => io.observe(el));
+
+  const faqHeads = document.querySelectorAll('.faq-q');
+  const faqBodies = document.querySelectorAll('.faq-a');
+  faqHeads.forEach((h, i) => {
+    h.addEventListener('click', () => {
+      const item = h.closest('.faq-item');
+      const body = faqBodies[i];
+      const open = item.classList.toggle('open');
+      body.style.maxHeight = open ? body.scrollHeight + 'px' : '0px';
+    });
+  });
+
+  const links = document.querySelectorAll('.topnav a');
+  const sections = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        links.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector('.topnav a[href="#' + e.target.id + '"]');
+        if(active) active.classList.add('active');
+      }
+    });
+  }, {rootMargin:'-40% 0px -55% 0px'});
+  sections.forEach(s => spy.observe(s));
+
+  const agForm = document.getElementById('agForm');
+  if (agForm) {
+    agForm.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      const name = (document.getElementById('agname').value || '').trim();
+      const role = (document.getElementById('agrole').value || '').trim();
+      const company = (document.getElementById('agcompany').value || '').trim();
+      const phone = (document.getElementById('agphone').value || '').trim();
+      const email = (document.getElementById('agemail').value || '').trim();
+      const msg = `Hello Konkan Technology Services,%0A%0A*Agentic AI — Enquiry*%0AName: ${encodeURIComponent(name)}%0ARole: ${encodeURIComponent(role)}%0ACompany: ${encodeURIComponent(company)}%0APhone: ${encodeURIComponent(phone)}%0AEmail: ${encodeURIComponent(email)}`;
+      window.open('https://wa.me/919325398862?text=' + msg, '_blank');
+      const btn = this.querySelector('button');
+      if (btn) { btn.textContent = 'Opening WhatsApp…'; setTimeout(() => { btn.textContent = 'Enroll Now'; agForm.reset(); }, 4000); }
+    });
+  }
+</script>
+
+</body>
+</html>
