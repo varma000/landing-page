@@ -10,20 +10,21 @@
 <style>
   :root{
     --ink:#0B1220;
-    --bg-dark:#0A0F1E;
-    --bg-panel:#111a2e;
-    --bg-panel2:#0E1626;
+    --bg:#FFFFFF;
+    --bg-soft:#F4F7FB;
+    --bg-soft2:#ECF1F8;
     --teal:#000090;            /* brand royal blue */
-    --accent:#3B6CFF;          /* lighter royal-blue for techy highlights */
-    --line:#22304d;
+    --accent:#1D4ED8;          /* lighter royal-blue for techy highlights */
+    --line:#DCE3EE;
     --white:#FFFFFF;
-    --muted:#8FA3C7;
-    --text:#E6ECFA;
-    --green:#3DDC84;
+    --muted:#56657A;
+    --text:#0B1220;
+    --green:#15924B;
+    --header-h:66px;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
-  body{background:var(--bg-dark); color:var(--text); font-family:'Poppins', sans-serif; line-height:1.65; -webkit-font-smoothing:antialiased;}
+  body{background:var(--bg); color:var(--text); font-family:'Poppins', sans-serif; line-height:1.65; -webkit-font-smoothing:antialiased;}
   @media (prefers-reduced-motion: reduce){ *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;} }
   h1,h2,h3,h4{font-weight:700; letter-spacing:-0.01em; line-height:1.12;}
   .mono{font-family:'IBM Plex Mono', monospace; text-transform:uppercase; letter-spacing:0.1em; font-size:0.7rem; color:var(--accent);}
@@ -32,72 +33,71 @@
   button,input,select,textarea{font-family:'Poppins', sans-serif;}
   a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
 
-  /* TOP BAR */
-  .topbar{position:sticky; top:0; z-index:60; background:rgba(10,15,30,0.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
-  .topbar .row{max-width:1320px; margin:0 auto; padding:14px 28px; display:flex; align-items:center; justify-content:space-between;}
-  .logo{display:flex; align-items:center; gap:10px;}
-  .logo-img{height:38px; width:auto;}
-  .top-cta{background:var(--teal); color:var(--white); border:none; padding:11px 20px; border-radius:8px; font-weight:600; font-size:0.85rem; cursor:pointer; transition:background .2s;}
+  /* TOP BAR (sticky header + full nav) */
+  .topbar{position:fixed; top:0; left:0; right:0; z-index:60; background:rgba(255,255,255,0.94); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
+  .topbar .row{max-width:1320px; margin:0 auto; padding:12px 24px; display:flex; align-items:center; gap:18px;}
+  .logo{display:flex; align-items:center; gap:10px; flex-shrink:0;}
+  .logo-img{height:36px; width:auto;}
+  .topnav{display:flex; gap:4px; flex:1; justify-content:center; overflow-x:auto; scrollbar-width:none;}
+  .topnav::-webkit-scrollbar{display:none;}
+  .topnav a{padding:8px 12px; border-radius:8px; font-size:0.84rem; color:var(--muted); font-weight:500; white-space:nowrap; transition:background .15s, color .15s;}
+  .topnav a:hover, .topnav a.active{background:var(--bg-soft); color:var(--teal);}
+  .top-cta{background:var(--teal); color:var(--white); border:none; padding:10px 18px; border-radius:8px; font-weight:600; font-size:0.84rem; cursor:pointer; transition:background .2s; flex-shrink:0;}
   .top-cta:hover{background:#00006e;}
+  @media (max-width:900px){ .topnav{display:none;} }
 
-  /* LAYOUT: sidebar + content */
-  .shell{max-width:1320px; margin:0 auto; display:grid; grid-template-columns:236px 1fr; gap:0;}
-  @media (max-width:1024px){ .shell{grid-template-columns:1fr;} .sidebar{display:none;} }
+  /* SCROLL-SNAP CONTAINER */
+  .snap{height:100dvh; overflow-y:scroll; scroll-snap-type:y mandatory; scroll-behavior:smooth; -webkit-overflow-scrolling:touch;}
 
-  .sidebar{position:sticky; top:67px; align-self:start; height:calc(100vh - 67px); padding:26px 18px; border-right:1px solid var(--line);}
-  .sidebar .tree-title{font-family:'IBM Plex Mono'; font-size:0.68rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:14px;}
-  .sidebar a{display:flex; align-items:center; gap:9px; padding:9px 12px; border-radius:8px; font-size:0.86rem; color:var(--muted); font-weight:500; transition:background .15s, color .15s;}
-  .sidebar a .dot{width:6px; height:6px; border-radius:50%; background:var(--line);}
-  .sidebar a:hover, .sidebar a.active{background:var(--bg-panel); color:var(--text);}
-  .sidebar a:hover .dot, .sidebar a.active .dot{background:var(--accent);}
-  .sidebar .sb-foot{margin-top:22px; font-size:0.74rem; color:var(--muted); border-top:1px solid var(--line); padding-top:14px;}
+  /* FULL-SCREEN PANELS */
+  .panel{scroll-snap-align:start; min-height:100dvh; display:flex; flex-direction:column; overflow-y:auto; padding:calc(var(--header-h) + 36px) 36px 48px;}
+  .panel > .inner{margin:auto; width:100%; max-width:1120px;}
+  @media (max-width:560px){ .panel{padding:calc(var(--header-h) + 20px) 18px 30px;} }
 
-  main{padding:0 40px 40px; min-width:0;}
-  @media (max-width:560px){ main{padding:0 18px 30px;} }
-
-  section{padding:70px 0; border-bottom:1px solid var(--line);}
-  .sec-head{max-width:680px; margin-bottom:40px;}
+  section.panel{border-bottom:1px solid var(--line);}
+  .sec-head{max-width:680px; margin:0 auto 34px; text-align:center;}
   .sec-head .mono{display:block; margin-bottom:12px;}
-  .sec-head h2{font-size:clamp(1.7rem,3.2vw,2.3rem);}
+  .sec-head h2{font-size:clamp(1.6rem,3vw,2.3rem);}
   .sec-head p{color:var(--muted); margin-top:12px; font-size:1rem;}
 
-  /* HERO (terminal) */
-  .hero{padding-top:64px;}
-  .hero h1{font-size:clamp(2rem,4.6vw,3.2rem);}
+  /* HERO */
+  .hero .inner{max-width:980px;}
+  .hero h1{font-size:clamp(2rem,4.4vw,3.2rem); text-align:center;}
   .hero h1 em{font-style:normal; color:var(--accent);}
-  .hero .sub{color:var(--muted); font-size:1.05rem; max-width:560px; margin:16px 0 26px;}
-  .hero-ctas{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:34px;}
+  .hero .sub{color:var(--muted); font-size:1.05rem; max-width:560px; margin:16px auto 26px; text-align:center;}
+  .hero-ctas{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:30px; justify-content:center;}
   .btn{background:var(--teal); color:var(--white); border:none; padding:13px 24px; border-radius:8px; font-weight:600; font-size:0.9rem; cursor:pointer; transition:background .2s, transform .15s; display:inline-block;}
   .btn:hover{background:#00006e; transform:translateY(-1px);}
   .btn-outline{background:transparent; color:var(--text); border:1.5px solid var(--line); padding:13px 24px; border-radius:8px; font-weight:600; font-size:0.9rem; cursor:pointer; display:inline-block; transition:border-color .2s;}
   .btn-outline:hover{border-color:var(--accent);}
 
-  .terminal{background:#05080F; border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,0.5); max-width:760px;}
-  .terminal .bar{display:flex; align-items:center; gap:7px; padding:12px 16px; background:var(--bg-panel2); border-bottom:1px solid var(--line);}
+  /* TERMINAL (kept dark on white page) */
+  .terminal{background:#05080F; border:1px solid #1b2740; border-radius:14px; overflow:hidden; box-shadow:0 24px 60px rgba(2,6,23,0.35); max-width:760px; margin:0 auto 30px;}
+  .terminal .bar{display:flex; align-items:center; gap:7px; padding:12px 16px; background:#0E1626; border-bottom:1px solid #1b2740;}
   .terminal .bar .r{width:11px; height:11px; border-radius:50%; background:#ff5f56;}
   .terminal .bar .y{width:11px; height:11px; border-radius:50%; background:#ffbd2e;}
   .terminal .bar .g{width:11px; height:11px; border-radius:50%; background:#27c93f;}
-  .terminal .bar .ttl{margin-left:10px; font-family:'IBM Plex Mono'; font-size:0.72rem; color:var(--muted);}
-  .terminal .body{padding:20px 22px; font-family:'IBM Plex Mono'; font-size:0.86rem; line-height:1.8; color:var(--text);}
-  .terminal .body .c{color:var(--green);}
-  .terminal .body .p{color:var(--accent);}
-  .terminal .body .o{color:var(--muted);}
-  .terminal .body .blink{display:inline-block; width:9px; height:1.1em; background:var(--accent); vertical-align:middle; animation:blink 1s steps(2) infinite;}
+  .terminal .bar .ttl{margin-left:10px; font-family:'IBM Plex Mono'; font-size:0.72rem; color:#8FA3C7;}
+  .terminal .body{padding:20px 22px; font-family:'IBM Plex Mono'; font-size:0.86rem; line-height:1.8; color:#E6ECFA;}
+  .terminal .body .c{color:#3DDC84;}
+  .terminal .body .p{color:#5B86FF;}
+  .terminal .body .o{color:#8FA3C7;}
+  .terminal .body .blink{display:inline-block; width:9px; height:1.1em; background:#5B86FF; vertical-align:middle; animation:blink 1s steps(2) infinite;}
   @keyframes blink{50%{opacity:0;}}
 
-  /* STAT STRIP (terminal style) */
-  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:14px; overflow:hidden; margin-top:38px;}
-  .stats .s{background:var(--bg-panel); padding:22px; text-align:center;}
+  /* STAT STRIP */
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; max-width:760px; margin:0 auto;}
+  .stats .s{background:var(--bg-soft); border:1px solid var(--line); border-radius:14px; padding:20px; text-align:center;}
   .stats .s .big{font-family:'IBM Plex Mono'; font-size:1.7rem; font-weight:600; color:var(--accent);}
   .stats .s .lbl{font-size:0.78rem; color:var(--muted); margin-top:4px;}
-  @media (max-width:680px){ .stats{grid-template-columns:1fr 1fr;} }
+  @media (max-width:680px){ .stats{grid-template-columns:1fr 1fr; gap:10px;} }
 
   /* ZIG-ZAG ROWS */
-  .zig{display:grid; grid-template-columns:1fr 1fr; gap:46px; align-items:center; margin:0 auto 30px; max-width:1040px;}
+  .zig{display:grid; grid-template-columns:1fr 1fr; gap:46px; align-items:center; margin:0 auto; max-width:1040px;}
   .zig:nth-child(even) .z-img{order:2;}
-  .zig .z-img img{width:100%; border-radius:14px; border:1px solid var(--line); box-shadow:0 16px 40px rgba(0,0,0,0.4);}
+  .zig .z-img img{width:100%; border-radius:14px; border:1px solid var(--line); box-shadow:0 16px 40px rgba(11,18,32,0.10);}
   .zig .z-txt .mono{display:block; margin-bottom:10px;}
-  .zig .z-txt h3{font-size:1.35rem; margin-bottom:10px;}
+  .zig .z-txt h3{font-size:1.35rem; margin-bottom:10px; color:var(--ink);}
   .zig .z-txt p{color:var(--muted); font-size:0.95rem;}
   .zig .z-txt ul{list-style:none; margin-top:14px; display:flex; flex-direction:column; gap:8px;}
   .zig .z-txt li{display:flex; gap:9px; font-size:0.9rem; color:var(--text);}
@@ -106,90 +106,100 @@
 
   /* PIPELINE ROADMAP */
   .pipe{display:flex; flex-direction:column; gap:0; max-width:880px; margin:0 auto;}
-  .pipe .node{display:grid; grid-template-columns:54px 1fr; gap:18px; position:relative; padding-bottom:26px;}
+  .pipe .node{display:grid; grid-template-columns:54px 1fr; gap:18px; position:relative; padding-bottom:22px;}
   .pipe .node:last-child{padding-bottom:0;}
-  .pipe .node .bead{width:46px; height:46px; border-radius:12px; background:var(--bg-panel); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono'; font-weight:600; color:var(--accent); z-index:2;}
+  .pipe .node .bead{width:46px; height:46px; border-radius:12px; background:var(--bg-soft); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono'; font-weight:600; color:var(--accent); z-index:2;}
   .pipe .node::before{content:''; position:absolute; left:22px; top:46px; bottom:0; width:2px; background:var(--line);}
   .pipe .node:last-child::before{display:none;}
-  .pipe .node .pc{background:var(--bg-panel); border:1px solid var(--line); border-radius:12px; padding:18px 20px;}
-  .pipe .node .pc h3{font-size:1.08rem;}
+  .pipe .node .pc{background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:16px 20px;}
+  .pipe .node .pc h3{font-size:1.05rem; color:var(--ink);}
   .pipe .node .pc .tools{font-family:'IBM Plex Mono'; font-size:0.74rem; color:var(--accent); margin:6px 0;}
   .pipe .node .pc .ex{font-size:0.85rem; color:var(--muted);}
 
   /* TOOLS GRID */
-  .tools{background:var(--bg-panel2);}
+  .tools{background:var(--bg-soft);}
   .toolgrid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; max-width:980px; margin:0 auto;}
-  .tcard{background:var(--bg-panel); border:1px solid var(--line); border-radius:12px; padding:18px; text-align:center;}
-  .tcard .ti{width:42px; height:42px; margin:0 auto 10px; border-radius:10px; background:var(--bg-dark); color:var(--accent); display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono'; font-weight:600; font-size:0.8rem;}
-  .tcard .tn{font-size:0.88rem; font-weight:600;}
+  .tcard{background:var(--white); border:1px solid var(--line); border-radius:12px; padding:18px; text-align:center;}
+  .tcard .ti{width:42px; height:42px; margin:0 auto 10px; border-radius:10px; background:var(--bg-soft2); color:var(--accent); display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono'; font-weight:600; font-size:0.8rem;}
+  .tcard .tn{font-size:0.88rem; font-weight:600; color:var(--ink);}
   @media (max-width:680px){ .toolgrid{grid-template-columns:1fr 1fr;} }
 
   /* PROJECTS */
   .proj{display:grid; grid-template-columns:repeat(2,1fr); gap:20px; max-width:980px; margin:0 auto;}
-  .proj .pc{background:var(--bg-panel); border:1px solid var(--line); border-radius:14px; overflow:hidden;}
+  .proj .pc{background:var(--white); border:1px solid var(--line); border-radius:14px; overflow:hidden;}
   .proj .pc img{width:100%; height:210px; object-fit:cover;}
   .proj .pc .body{padding:20px 22px;}
   .proj .pc .tag{font-family:'IBM Plex Mono'; font-size:0.66rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent);}
-  .proj .pc h3{font-size:1.18rem; margin:6px 0; color:var(--text);}
+  .proj .pc h3{font-size:1.18rem; margin:6px 0; color:var(--ink);}
   .proj .pc p{font-size:0.88rem; color:var(--muted);}
   @media (max-width:720px){ .proj{grid-template-columns:1fr;} }
 
   /* RESULTS */
   .resgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; max-width:840px; margin:0 auto;}
-  .res{background:var(--bg-panel); border:1px solid var(--line); border-radius:14px; padding:26px; text-align:center;}
-  .res .big{font-family:'IBM Plex Mono'; font-size:2.2rem; font-weight:600; color:var(--accent);}
+  .res{background:var(--bg-soft); border:1px solid var(--line); border-radius:14px; padding:26px; text-align:center;}
+  .res .big{font-family:'IBM Plex Mono'; font-size:2.1rem; font-weight:600; color:var(--accent);}
   .res .lbl{font-size:0.86rem; color:var(--muted); margin-top:6px;}
 
   /* TESTIMONIALS */
   .tg{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; max-width:1040px; margin:0 auto;}
   @media (max-width:860px){ .tg{grid-template-columns:1fr;} }
-  .tcard2{background:var(--bg-panel); border:1px solid var(--line); border-radius:14px; padding:22px;}
+  .tcard2{background:var(--bg-soft); border:1px solid var(--line); border-radius:14px; padding:22px;}
   .tcard2 .q{font-family:'IBM Plex Mono'; color:var(--accent); font-size:1.4rem;}
   .tcard2 p{font-size:0.9rem; color:var(--text); margin:8px 0 14px;}
   .tcard2 .who{font-size:0.84rem; color:var(--muted); font-weight:600;}
 
   /* FAQ */
   .faq{max-width:780px; margin:0 auto; display:flex; flex-direction:column; gap:12px;}
-  .faq .f{background:var(--bg-panel); border:1px solid var(--line); border-radius:12px; overflow:hidden;}
+  .faq .f{background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; overflow:hidden;}
   .faq .f .q{padding:17px 22px; cursor:pointer; font-weight:600; display:flex; justify-content:space-between; gap:12px;}
   .faq .f .q .plus{color:var(--accent); font-size:1.3rem; transition:transform .3s;}
   .faq .f.open .q .plus{transform:rotate(45deg);}
   .faq .f .a{max-height:0; overflow:hidden; transition:max-height .35s ease;}
   .faq .f .a .inner{padding:0 22px 17px; font-size:0.9rem; color:var(--muted);}
 
-  /* ENROLL FORM (white box, consistent with others) */
-  .enroll-box{max-width:560px; margin:0 auto; background:var(--white); border-radius:16px; padding:30px;}
+  /* ENROLL FORM (white box) */
+  .enroll-box{max-width:560px; margin:0 auto; background:var(--white); border:1px solid var(--line); border-radius:16px; padding:30px; box-shadow:0 14px 40px rgba(11,18,32,0.08);}
   .enroll-box label{display:block; font-family:'IBM Plex Mono'; font-size:0.66rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--teal); margin:14px 0 8px;}
   .enroll-box label:first-child{margin-top:0;}
-  .enroll-box input, .enroll-box select{width:100%; background:#F5F7FB; border:1px solid #D2DAE8; border-radius:8px; padding:12px 14px; color:var(--ink); font-size:0.9rem;}
+  .enroll-box input{width:100%; background:var(--bg-soft); border:1px solid var(--line); border-radius:8px; padding:12px 14px; color:var(--ink); font-size:0.9rem;}
   .enroll-box .btn{width:100%; margin-top:20px; background:var(--teal); color:var(--white); border:none; padding:14px; border-radius:8px; font-weight:600; font-size:0.95rem; cursor:pointer;}
   .enroll-box .btn:hover{background:#00006e;}
-  .enroll-box .wa{display:block; text-align:center; margin-top:14px; font-size:0.84rem; color:#4A5A54;}
+  .enroll-box .wa{display:block; text-align:center; margin-top:14px; font-size:0.84rem; color:var(--muted);}
   .enroll-box .wa a{color:var(--teal); font-weight:600; text-decoration:none;}
 
   /* CTA BANNER */
   .banner{text-align:center;}
+  .banner .inner{max-width:760px;}
   .banner h2{font-size:clamp(1.6rem,3vw,2.3rem); max-width:720px; margin:0 auto 22px;}
   .banner .cl{margin-top:22px; font-size:0.9rem; color:var(--muted);}
   .banner .cl a{color:var(--accent); font-weight:600; text-decoration:none;}
 
   /* FOOTER */
-  footer{border-top:1px solid var(--line); padding:46px 0; background:var(--bg-panel2);}
+  footer.panel{background:var(--bg-soft);}
   footer .wrap{max-width:1180px; margin:0 auto; padding:0 28px; display:grid; grid-template-columns:1.4fr 1fr 1fr 1.4fr; gap:26px;}
   @media (max-width:860px){ footer .wrap{grid-template-columns:1fr 1fr;} }
   @media (max-width:560px){ footer .wrap{grid-template-columns:1fr;} }
   footer .col h4{font-size:0.95rem; color:var(--accent); margin-bottom:14px;}
   footer .fl{display:flex; flex-direction:column; gap:9px; font-size:0.88rem; font-weight:500;}
   footer .fl a{color:var(--muted);}
-  footer .fl a:hover{color:var(--text);}
+  footer .fl a:hover{color:var(--teal);}
   footer .fc{font-size:0.85rem; line-height:1.95; color:var(--muted);}
   footer .fi{display:flex; align-items:center; gap:9px; color:var(--muted);}
   footer .fi a{color:var(--muted); text-decoration:none; font-weight:500;}
-  footer .fi a:hover{color:var(--text);}
+  footer .fi a:hover{color:var(--teal);}
   footer .ico{width:15px; height:15px; flex-shrink:0; stroke:var(--accent); fill:none; stroke-width:1.8;}
   footer .socials{display:flex; gap:10px; margin-top:14px;}
-  footer .socials a{width:34px; height:34px; border-radius:50%; background:var(--bg-panel); color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:700;}
+  footer .socials a{width:34px; height:34px; border-radius:50%; background:var(--white); color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:700; border:1px solid var(--line);}
   footer .copy{display:block; margin-top:18px; font-family:'IBM Plex Mono'; font-size:0.7rem; color:var(--muted);}
+
+  /* SIDE DOTS */
+  .dots{position:fixed; right:16px; top:50%; transform:translateY(-50%); z-index:55; display:flex; flex-direction:column; gap:11px;}
+  .dots a{width:11px; height:11px; border-radius:50%; background:var(--line); transition:background .2s, transform .2s; position:relative;}
+  .dots a:hover{background:var(--accent);}
+  .dots a.active{background:var(--teal); transform:scale(1.35);}
+  .dots a span{position:absolute; right:20px; top:50%; transform:translateY(-50%); background:var(--ink); color:#fff; font-size:0.66rem; padding:3px 8px; border-radius:6px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .15s;}
+  .dots a:hover span{opacity:1;}
+  @media (max-width:700px){ .dots{display:none;} }
 
   .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
   .reveal.visible{opacity:1; transform:translateY(0);}
@@ -197,35 +207,34 @@
 </head>
 <body>
 
-<div class="topbar">
+<header class="topbar">
   <div class="row">
     <a class="logo" href="#top" aria-label="Konkan Technology Services — home">
       <img class="logo-img" src="Assets/kts-logo.png" alt="Konkan Technology Services">
     </a>
+    <nav class="topnav">
+      <a href="#top" class="active">Overview</a>
+      <a href="#for">Who it's for</a>
+      <a href="#learn">What you build</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#stack">Toolchain</a>
+      <a href="#projects">Capstones</a>
+      <a href="#results">Outcomes</a>
+      <a href="#faq">FAQ</a>
+      <a href="#enroll">Enroll</a>
+    </nav>
     <a href="#enroll" class="top-cta">Enroll Now</a>
   </div>
-</div>
+</header>
 
-<div class="shell">
-  <aside class="sidebar">
-    <div class="tree-title">// course-nav</div>
-    <a href="#top" class="active"><span class="dot"></span> Overview</a>
-    <a href="#for"><span class="dot"></span> Who it's for</a>
-    <a href="#learn"><span class="dot"></span> What you build</a>
-    <a href="#roadmap"><span class="dot"></span> Roadmap</a>
-    <a href="#stack"><span class="dot"></span> Toolchain</a>
-    <a href="#projects"><span class="dot"></span> Capstones</a>
-    <a href="#results"><span class="dot"></span> Outcomes</a>
-    <a href="#faq"><span class="dot"></span> FAQ</a>
-    <a href="#enroll"><span class="dot"></span> Enroll</a>
-    <div class="sb-foot">Pricing on request<br>Get a free quote →</div>
-  </aside>
+<nav class="dots" aria-label="Section navigation"></nav>
 
-  <main id="top">
+<div class="snap">
 
-    <!-- HERO -->
-    <section class="hero">
-      <div class="sec-head" style="margin-bottom:0;">
+  <!-- HERO -->
+  <section class="panel hero" id="top" data-label="Overview">
+    <div class="inner">
+      <div class="sec-head" style="margin-bottom:18px;">
         <span class="mono">AI for IT Professionals</span>
         <h1>Build, automate, and secure with AI — for engineers who <em>live in the terminal</em>.</h1>
       </div>
@@ -254,10 +263,12 @@
         <div class="s"><div class="big">2</div><div class="lbl">Portfolio Pipelines</div></div>
         <div class="s"><div class="big">~8</div><div class="lbl">Hrs / Week Lab</div></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- WHO IT'S FOR -->
-    <section id="for">
+  <!-- WHO IT'S FOR -->
+  <section class="panel" id="for" data-label="Who it's for">
+    <div class="inner">
       <div class="sec-head reveal">
         <span class="mono">// who-it's-for</span>
         <h2>Built for people who already ship</h2>
@@ -290,10 +301,12 @@
           <ul><li>AI-assisted code review</li><li>Threat modeling prompts</li><li>Policy-as-code drafts</li></ul>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- WHAT YOU BUILD -->
-    <section id="learn">
+  <!-- WHAT YOU BUILD -->
+  <section class="panel" id="learn" data-label="What you build">
+    <div class="inner">
       <div class="sec-head reveal">
         <span class="mono">// what-you-build</span>
         <h2>You leave with real systems</h2>
@@ -308,10 +321,12 @@
           <ul><li>CLI copilot from Week 1</li><li>IaC + CI from Week 3</li><li>Self-healing ops by Week 6</li></ul>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ROADMAP (pipeline) -->
-    <section id="roadmap">
+  <!-- ROADMAP -->
+  <section class="panel" id="roadmap" data-label="Roadmap">
+    <div class="inner">
       <div class="sec-head reveal">
         <span class="mono">// roadmap</span>
         <h2>The 6-week AI Ops pipeline</h2>
@@ -325,10 +340,12 @@
         <div class="node reveal"><div class="bead">W5</div><div class="pc"><h3>Security &amp; Review</h3><div class="tools">Snyk · AI scanners</div><div class="ex">Exercise: Secure a real repo end-to-end</div></div></div>
         <div class="node reveal"><div class="bead">W6</div><div class="pc"><h3>Capstone: Self-Healing Ops</h3><div class="tools">Docker · Kubernetes · Pinecone</div><div class="ex">Exercise: Pipeline that detects, diagnoses &amp; patches</div></div></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- TOOLCHAIN -->
-    <section class="tools" id="stack">
+  <!-- TOOLCHAIN -->
+  <section class="panel tools" id="stack" data-label="Toolchain">
+    <div class="inner">
       <div class="sec-head reveal">
         <span class="mono">// toolchain</span>
         <h2>The stack you'll wire in</h2>
@@ -347,10 +364,12 @@
         <div class="tcard"><div class="ti">GR</div><div class="tn">Grafana</div></div>
         <div class="tcard"><div class="ti">SN</div><div class="tn">Snyk</div></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- PROJECTS -->
-    <section id="projects">
+  <!-- CAPSTONES -->
+  <section class="panel" id="projects" data-label="Capstones">
+    <div class="inner">
       <div class="sec-head reveal">
         <span class="mono">// capstones</span>
         <h2>Two portfolio systems</h2>
@@ -359,10 +378,12 @@
         <div class="pc reveal"><img src="it-img/team.jpg" alt="Team collaborating on an AI bot"><div class="body"><span class="tag">Mini-Project · Week 3</span><h3>Bot in a Week</h3><p>An internal AI helper — Slack/CLI bot that answers repo &amp; runbook questions.</p></div></div>
         <div class="pc reveal"><img src="it-img/devops.jpg" alt="Self-healing ops dashboard"><div class="body"><span class="tag">Final Capstone · Week 6</span><h3>Self-Healing Ops</h3><p>An AI pipeline that detects, diagnoses, and patches incidents — with a live dashboard.</p></div></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- RESULTS -->
-    <section id="results">
+  <!-- OUTCOMES -->
+  <section class="panel" id="results" data-label="Outcomes">
+    <div class="inner">
       <div class="sec-head reveal">
         <span class="mono">// outcomes</span>
         <h2>Join 500+ professionals already shipping with AI</h2>
@@ -372,10 +393,12 @@
         <div class="res reveal"><div class="big">97%</div><div class="lbl">Success rate</div></div>
         <div class="res reveal"><div class="big">5+</div><div class="lbl">Years of experience</div></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- TESTIMONIALS -->
-    <section>
+  <!-- TESTIMONIALS -->
+  <section class="panel" data-label="Testimonials">
+    <div class="inner">
       <div class="sec-head reveal">
         <span class="mono">// signal</span>
         <h2>What engineers say</h2>
@@ -385,10 +408,12 @@
         <div class="tcard2 reveal"><div class="q">"</div><p>As an SRE, the auto-triage capstone is now literally running in our on-call rotation. Recruiters noticed it instantly.</p><div class="who">— Meera, Site Reliability Engineer</div></div>
         <div class="tcard2 reveal"><div class="q">"</div><p>Finally a course that assumes you can code. No hand-holding — just tools, labs, and a portfolio pipeline.</p><div class="who">— Rohit, Platform Lead</div></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- FAQ -->
-    <section id="faq">
+  <!-- FAQ -->
+  <section class="panel" id="faq" data-label="FAQ">
+    <div class="inner">
       <div class="sec-head reveal">
         <span class="mono">// faq</span>
         <h2>Questions engineers ask</h2>
@@ -399,10 +424,12 @@
         <div class="f reveal"><div class="q">Is this about agents or just scripts? <span class="plus">+</span></div><div class="a"><div class="inner">Both. You'll build practical automations first, then layer agentic patterns (LangChain, tool-calling) on top by the capstone.</div></div></div>
         <div class="f reveal"><div class="q">How is this different from the Beginners course? <span class="plus">+</span></div><div class="a"><div class="inner">Beginners is a no-code first step. This course is code-first, tool-deep, and assumes engineering experience — it builds production systems, not concepts.</div></div></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ENROLL -->
-    <section id="enroll">
+  <!-- ENROLL -->
+  <section class="panel" id="enroll" data-label="Enroll">
+    <div class="inner">
       <div class="sec-head reveal">
         <span class="mono">// enroll</span>
         <h2>Ready to ship with AI?</h2>
@@ -424,10 +451,12 @@
         <button type="submit" class="btn">Enroll Now</button>
         <span class="wa">Or message us on <a href="https://wa.me/919325398862" target="_blank">WhatsApp (+91 9325398862)</a></span>
       </form>
-    </section>
+    </div>
+  </section>
 
-    <!-- CTA BANNER -->
-    <section class="banner">
+  <!-- CTA BANNER -->
+  <section class="panel banner" data-label="CTA">
+    <div class="inner">
       <h2 class="reveal">Ready to automate the grind?</h2>
       <div class="hero-ctas reveal" style="justify-content:center;">
         <a href="#enroll" class="btn">Enroll Now</a>
@@ -437,62 +466,65 @@
         📞 <a href="tel:+919325398862">(+91) 9325398862</a> &nbsp;·&nbsp; ✉️ <a href="mailto:konkantechnology@gmail.com">konkantechnology@gmail.com</a><br>
         📍 Near Amul Parlour, Dighi Road, Mhasla, Raigad – 402105 &nbsp;·&nbsp; <a href="https://wa.me/919325398862" target="_blank">WhatsApp</a>
       </div>
-    </section>
+    </div>
+  </section>
 
-  </main>
+  <!-- FOOTER -->
+  <footer class="panel" data-label="Footer">
+    <div class="inner">
+      <div class="wrap">
+        <div>
+          <a class="logo" href="#top" aria-label="Konkan Technology Services — home">
+            <img class="logo-img" src="Assets/kts-logo.png" alt="Konkan Technology Services">
+          </a>
+          <div class="socials">
+            <a href="#" aria-label="Facebook">FB</a>
+            <a href="#" aria-label="X">X</a>
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="#" aria-label="Instagram">IG</a>
+          </div>
+        </div>
+        <div class="col">
+          <h4>Quick Links</h4>
+          <div class="fl">
+            <a href="#top">Overview</a>
+            <a href="#roadmap">Roadmap</a>
+            <a href="#stack">Toolchain</a>
+            <a href="#faq">FAQ</a>
+          </div>
+        </div>
+        <div class="col">
+          <h4>Popular Courses</h4>
+          <div class="fl">
+            <a href="ai-for-beginners.html">AI for Beginners</a>
+            <a href="ai-for-students.html">AI for Students (Age 11–15)</a>
+            <a href="aiformarketing.html">AI for Marketing Professionals</a>
+            <a href="#enroll">Enroll Now</a>
+          </div>
+        </div>
+        <div class="col">
+          <h4>Get In Touch</h4>
+          <div class="fc">
+            <div class="fi"><svg class="ico" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:+919325398862">(+91) 9325398862</a></div>
+            <div class="fi"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a href="mailto:konkantechnology@gmail.com">konkantechnology@gmail.com</a></div>
+            <div class="fi"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><a href="https://konkantechnologies.in">konkantechnologies.in</a></div>
+            <div class="fi"><svg class="ico" viewBox="0 0 24 24"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Near Amul Parlour, Dighi Road, Mhasla, Raigad – 402105</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="wrap">
+        <span class="copy">© 2026 Konkan Technology Services · Pricing on request — contact us for a free quote</span>
+      </div>
+    </div>
+  </footer>
+
 </div>
-
-<footer>
-  <div class="wrap">
-    <div>
-      <a class="logo" href="#top" aria-label="Konkan Technology Services — home">
-        <img class="logo-img" src="Assets/kts-logo.png" alt="Konkan Technology Services">
-      </a>
-      <div class="socials">
-        <a href="#" aria-label="Facebook">FB</a>
-        <a href="#" aria-label="X">X</a>
-        <a href="#" aria-label="LinkedIn">in</a>
-        <a href="#" aria-label="Instagram">IG</a>
-      </div>
-    </div>
-    <div class="col">
-      <h4>Quick Links</h4>
-      <div class="fl">
-        <a href="#top">Overview</a>
-        <a href="#roadmap">Roadmap</a>
-        <a href="#stack">Toolchain</a>
-        <a href="#faq">FAQ</a>
-      </div>
-    </div>
-    <div class="col">
-      <h4>Popular Courses</h4>
-      <div class="fl">
-        <a href="ai-for-beginners.html">AI for Beginners</a>
-        <a href="ai-for-students.html">AI for Students (Age 11–15)</a>
-        <a href="aiformarketing.html">AI for Marketing Professionals</a>
-        <a href="#enroll">Enroll Now</a>
-      </div>
-    </div>
-    <div class="col">
-      <h4>Get In Touch</h4>
-      <div class="fc">
-        <div class="fi"><svg class="ico" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:+919325398862">(+91) 9325398862</a></div>
-        <div class="fi"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a href="mailto:konkantechnology@gmail.com">konkantechnology@gmail.com</a></div>
-        <div class="fi"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><a href="https://konkantechnologies.in">konkantechnologies.in</a></div>
-        <div class="fi"><svg class="ico" viewBox="0 0 24 24"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Near Amul Parlour, Dighi Road, Mhasla, Raigad – 402105</span></div>
-      </div>
-    </div>
-  </div>
-  <div class="wrap">
-    <span class="copy">© 2026 Konkan Technology Services · Pricing on request — contact us for a free quote</span>
-  </div>
-</footer>
 
 <script>
   const revealEls = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
-  }, {threshold:0.12});
+  }, {threshold:0.1});
   revealEls.forEach(el => io.observe(el));
 
   const faqHeads = document.querySelectorAll('.faq .q');
@@ -506,18 +538,29 @@
     });
   });
 
-  const links = document.querySelectorAll('.sidebar a');
-  const sections = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  // SIDE DOTS navigation (built from panels)
+  const panels = Array.from(document.querySelectorAll('.snap > .panel'));
+  const dotsWrap = document.querySelector('.dots');
+  const topLinks = Array.from(document.querySelectorAll('.topnav a'));
+  panels.forEach((p, idx) => {
+    const a = document.createElement('a');
+    a.href = '#' + (p.id || '');
+    const label = p.getAttribute('data-label') || ('Section ' + (idx+1));
+    a.setAttribute('aria-label', label);
+    const tip = document.createElement('span'); tip.textContent = label; a.appendChild(tip);
+    if (idx === 0) a.classList.add('active');
+    dotsWrap.appendChild(a);
+  });
+  const dotEls = Array.from(dotsWrap.children);
+
+  const setActive = (id) => {
+    topLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+    dotEls.forEach((d, i) => d.classList.toggle('active', panels[i].id === id));
+  };
   const spy = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if(e.isIntersecting){
-        links.forEach(l => l.classList.remove('active'));
-        const active = document.querySelector('.sidebar a[href="#' + e.target.id + '"]');
-        if(active) active.classList.add('active');
-      }
-    });
-  }, {rootMargin:'-40% 0px -55% 0px'});
-  sections.forEach(s => spy.observe(s));
+    entries.forEach(e => { if(e.isIntersecting) setActive(e.target.id); });
+  }, {root: document.querySelector('.snap'), rootMargin:'-45% 0px -45% 0px'});
+  panels.forEach(p => spy.observe(p));
 
   const itForm = document.getElementById('itForm');
   if (itForm) {
